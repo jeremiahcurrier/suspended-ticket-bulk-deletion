@@ -1,0 +1,14 @@
+.modal {
+  width: 700px;
+}
+
+.modal2 {
+  width: 300px;
+  height: 300px;
+}
+
+.whichModal {
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

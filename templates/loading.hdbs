@@ -1,0 +1,5 @@
+<p class="whichModal"> 'loading.hdbs' </p>
+<p> GATHERING all tickets in your account - this might take awhile so here's a GIF: </p>
+<img src="{{assetURL "simpsons.gif"}}" />
+{{spinner "dotted"}}
+<p class="whichModal"> 'loading.hdbs' </p>

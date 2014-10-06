@@ -1,0 +1,3 @@
+<p>There are <strong style="color:green;">{{ticketsFetched}}</strong> tickets TOTAL</p>
+<button class="btn findPriority">find low priority tickets</button>
+<p>Here's your global variable = {{globalVar}}</p>
