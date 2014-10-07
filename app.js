@@ -6,19 +6,10 @@
 
     requests: {
 
-      fetchTicketsRequest: function() {
-        return {
-          url: '/api/v2/tickets.json',
-          type: 'GET',
-          contentType: 'application/json'
-        };
-      },
-
       fetchTickets: function(next_page) {
-        return { // Get all suspended tickets
+        return {
           url: next_page || '/api/v2/tickets.json',
-          type: 'GET',
-          contentType: 'application/json'
+          type: 'GET'
         };
       }
 
@@ -27,17 +18,18 @@
     events: {
 
       'app.created': 'init',
-      'hidden .my_modal': 'afterHidden', // The 'hidden' event is fired when the modal (.my_modal) has finished being hidden from the user (will wait for css transitions to complete).
+      'hidden .my_modal': 'afterHidden', // https://developer.zendesk.com/apps/docs/agent/modals
       'click .count_button': 'fetch',
       'click .save_button': 'saveButton',
       'fetchTickets.done':'filterResults',
       'fetchTickets.fail':'fetchTicketsFail',
       'click .findPriority': 'findPriority',
-      'keyup .custom-search input': function(event){
-        if(event.keyCode === 13)
-          return this.processSearchFromInput();
-      },
-      'click .custom-search button': 'processSearchFromInput'
+      'click .close_button': 'cancelButton'
+      // 'keyup .custom-search input': function(event){
+      //   if(event.keyCode === 13)
+      //     return this.processSearchFromInput();
+      // },
+      // 'click .custom-search button': 'processSearchFromInput'
     
     },
 
@@ -55,6 +47,10 @@
       console.log("Modal closed");
     },
 
+    cancelButton: function() {
+      console.log('.cancel_button element clicked');
+    },
+
     fetch: function() {
       this.tickets = [];
       this.ajax('fetchTickets');
@@ -70,35 +66,47 @@
       var next_page = data.next_page,
           previous_page = data.previous_page;
 
-      if( next_page ) {
-      // if there is another page -> concat results to global variable, call it again w/ next_page as URL
+      if( next_page ) { // If there are more pages left to request data from
+
         this.tickets = this.tickets.concat(data.tickets);
         this.ajax('fetchTickets', next_page);
-        console.log(data);
-        console.log(this.tickets);
-        console.log('1 + page(s) of results remaining to request.');
-      } else if ( !previous_page && !next_page ) {  
-      // if only page -> results are just this page, proceed to delete
+
+      } else if ( !previous_page && !next_page ) {  // Only 1 page of results
+
         this.tickets = data.tickets;
-        console.log(data);
-        console.log(this.tickets);
-        console.log('There\'s only 1 page of results - job done.');
 
-        // this.deleteResults(this.suspended); // SEND DELETE API REQUEST
+        // this.ajax('myDeleteAJAXRequest'); - will go here :)
 
-      } else {  
-      // if last page -> concat results to global variable, proceed to delete
-
-        console.log(' $$$ REQUESTS FOR PAGINATED RESULTS COMPLETE & DATA SET READY FOR MANIPULATION $$$ ');
+      } else { // After retrieving last page of multiple pages of results
 
         this.tickets = this.tickets.concat(data.tickets);
 
-        console.log('Here are the results of all your requests to ~/tickets.json on the next line');
-        console.log(this.tickets);
+        // data manipulation testing start
 
-        var finalTicketCount = data.count;
+        var allTickets = this.tickets;
+        console.log(allTickets);
 
-        var globalVar = "LOCAL_VARIABLE";
+        console.log('Below is an array of an array of objects containing just the { key : value } pairs for \'id\' & \'status\'');
+
+        var allTicketsIdAndStatusOnly = _.chain(allTickets).flatten(true).map( // Thanks to https://github.com/dpawluk for this line of underscore magic
+          function( x ){ 
+              return _.pick( x , 'id', 'status'); // I sorted out this little underscore piece - go me!
+          }).value();
+        
+        console.log(allTicketsIdAndStatusOnly);
+
+        console.log('below should be only status pending???');
+
+        var justPending = _.filter(allTicketsIdAndStatusOnly, function(tkt) { // This simplified version courtesy of one https://github.com/jstjoe
+         return tkt.status == 'pending';
+        });
+
+        console.log(justPending);
+
+        // data manipulation testing end
+
+        var finalTicketCount = data.count,
+            globalVar = "LOCAL_VARIABLE";
 
         this.switchTo('modal2', {
           header: this.I18n.t('modal_header'),
@@ -107,15 +115,15 @@
           finalTicketCount: finalTicketCount
         });
 
-        // this.deleteResults(this.suspended); // SEND DELETE API REQUEST
+        // this.ajax('myDeleteAJAXRequest'); - will go here :)
 
       }
     },
 
-    processSearchFromInput: function(){
-      var query = this.removePunctuation(this.$('.custom-search input').val());
-      if (query && query.length) { this.search(query); }
-    },
+    // processSearchFromInput: function(){
+    //   var query = this.removePunctuation(this.$('.custom-search input').val());
+    //   if (query && query.length) { this.search(query); }
+    // },
 
     findPriority: function() {
 
@@ -129,7 +137,7 @@
 
     saveButton: function() {
 
-      alert('you clicked CONFIRM in the modal2, now we will find data from your results - sit tight!');
+      console.log('.save_button element clicked');
       this.switchTo('loading2');
 
     }

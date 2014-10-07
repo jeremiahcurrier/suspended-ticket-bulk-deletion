@@ -29,17 +29,8 @@
 <!-- call the modal division above -->
 
 <div class="modal_button_cell">
-
   <p class="whichModal"> 2-modal-2 </p>
-
-  <P> {{second}} </p>
-
-  <p> TOTAL TICKETS COUNTED = <strong style="color:green;">{{finalTicketCount}}</strong> </p>
-
+  <p>TOTAL TICKETS <strong style="color:green;">{{finalTicketCount}}</strong></p>
   <a class="btn btn-large" data-toggle="modal" data-target=".my_modal">{{t "modal_button"}}</a> 
-
   <p>GTV = <strong style="color:green;">{{globalVar}}</strong></p>
-
-  <p class="whichModal"> 2-modal-2 </p>
-
 </div>

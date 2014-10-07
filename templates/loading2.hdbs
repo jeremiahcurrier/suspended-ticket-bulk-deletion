@@ -1,6 +1,5 @@
+<h3>You clicked 'confirm' in the modal</h3>
 <p class="whichModal"> 'loading2.hdbs' </p>
 <p> SORTING all tickets in your account - this might take awhile so here's a GIF: </p>
 <img src="{{assetURL "simpsons.gif"}}" />
 {{spinner "dotted"}}
-<p> NOTHING IS ACTUALLY HAPPENING WITH THIS PART OF THE CODE YET </p>
-<p class="whichModal"> 'loading2.hdbs' </p>

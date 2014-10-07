@@ -1,34 +1,5 @@
-<!-- modal.hdbs -->
-<div class="modal hide fade my_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
-  <div class="modal-header">
-    <p>MODAL.HDBS</p>
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-    <h3 class="my_modal_label">We have to parse data from <strong style="color:green;">{{finalTicketCount}}</strong> total tickets in this account.| HEADER = {{header}}</h3>
-  </div>
-  
-  <div class="modal-body">
-    <p>{{body}}</p>
-    <p>The global test variable = <strong style="color:green;">{{globalVar}}</strong></p>
-    <img src="http://collegetimes.com/wp-content/uploads/2014/07/nervous.gif" /> 
-  </div>
-
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">{{t "close_button"}}</button>
-    <button class="btn btn-primary save_button" data-dismiss="modal" aria-hidden="true">{{t "save_button"}}</button> 
-  </div>
-
-</div>
-
-
-
-
-
-<!-- call the modal division above -->
-
 <div class="modal_button_cell">
   <p class="whichModal"> 1-modal-1 </p>
   <button class="btn count_button">FETCH ALL TICKETS</button>
   <p>GTV = <strong style="color:green;">{{globalVar}}</strong></p>
-  <p class="whichModal"> 1-modal-1 </p>
 </div>
