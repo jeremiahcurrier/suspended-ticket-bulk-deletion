@@ -1,14 +1,9 @@
-# App name
+# Suspended Ticket Nuke - Modal Test
 
-[brief description of the app]
+This app is going to delete many suspended tickets
 
-### The following information is displayed:
-
-* info1
-* info2
-* info3
-
-Please submit bug reports to [Insert Link](). Pull requests are welcome.
+Please submit bug reports to [Me](https://github.com/jeremiahcurrier). Pull requests are welcome.
 
 ### Screenshot(s):
-[put your screenshots down here.]
+
+![](http://g.recordit.co/1EcAyPe8sk.gif)
