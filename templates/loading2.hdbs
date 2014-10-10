@@ -1,5 +1,4 @@
-<h3>You clicked 'confirm' in the modal</h3>
 <p class="whichModal"> 'loading2.hdbs' </p>
-<p> SORTING all tickets in your account - this might take awhile so here's a GIF: </p>
-<img src="{{assetURL "simpsons.gif"}}" />
+<p>Printing IDs of all suspended tickets to your Javascript console</p>
+<!--<img src="{{assetURL "simpsons.gif"}}" />-->
 {{spinner "dotted"}}

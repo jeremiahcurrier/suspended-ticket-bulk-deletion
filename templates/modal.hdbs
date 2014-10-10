@@ -1,5 +1,4 @@
 <div class="modal_button_cell">
-  <p class="whichModal"> 1-modal-1 </p>
-  <button class="btn count_button">FETCH ALL TICKETS</button>
-  <p>GTV = <strong style="color:green;">{{globalVar}}</strong></p>
+  <p class="whichModal">'modal.hdbs'</p>
+  <button class="btn count_button">Count Suspended Tickets</button>
 </div>

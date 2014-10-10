@@ -1,4 +1,2 @@
-<p>There are <strong style="color:green;">{{ticketsFetched}}</strong> tickets TOTAL</p>
-<p>Do you want to filter this down to only tickets with a status of 'pending'?</p>
-<button class="btn findPriority">find low priority tickets</button>
-<p>GVT = {{globalVar}}</p>
+<p>{{results}} users obtained via GET to ~/api/v2/users.json </p>
+<img src="{{assetURL "nuke.gif"}}" />

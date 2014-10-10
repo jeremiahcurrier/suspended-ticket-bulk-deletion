@@ -16,12 +16,12 @@
 
   // DESCRIPTION
 
-  "description1": {
+  "description1": { // Unused
     "value": "descriptionONE",
     "title": "in app instruction part 1"
   },
 
-  "description2": {
+  "description2": { // Unused
     "value": "descriptionTWO",
     "title": "in app instruction part 2"
   },
@@ -29,43 +29,43 @@
   // BUTTON
 
   "modal_button": { // this is in the modal.hdbs in the div class of "modal_button_cell"
-    "value": "GET LOW PRIORITY tickets .modal_button", // TEXT IN THE button IN THE APP UI - not in the modal
+    "value": "Delete tickets with selected causes", // TEXT IN THE button IN THE APP UI - not in the modal
     "title": "Message on the button in the sidebar app interface"
   },
 
   // BELOW IS THE ACTUAL MODAL
 
-  "save_button": {
+  "save_button": { // Unused
     "value": "CONFIRM .save_button",
     "title": "Message on the save button in modal"
   },
 
-  "close_button": {
+  "close_button": { // Unused
     "value": "CANCEL .close_button",
     "title": "Message on the close button in modal"
   },
 
-  "modal_header": {
+  "modal_header": { // Unused
    "value": "YOU SURE (modal header) - .modal_header", // TEXT IN THE header OF THE MODAL
    "title": "Header message inside the modal window"
   },
 
-  "modal_body": {
+  "modal_body": { // Unused
     "value": "YOU SURE (modal body) - .modal_body", // TEXT IN THE body OF THE MODAL
     "title": "Message inside a modal window that plays on the 'Keep Calm! Make a Zendesk App' phase"
-  },
+  }
 
   // INPUT AREAS in the ACTUAL MODAL
 
-  "layout": {
-    "placeholder_text": {
-      "title": "Placeholder text in the search bar",
-      "value": "Total tickets returned"
-    },
-    "search_button": {
-      "title": "Search button when clicked triggers a search",
-      "value": "Submit Value"
-    }
-  }
+  // "layout": {
+  //   "placeholder_text": {
+  //     "title": "Placeholder text in the search bar",
+  //     "value": "Total tickets returned"
+  //   },
+  //   "search_button": {
+  //     "title": "Search button when clicked triggers a search",
+  //     "value": "Submit Value"
+  //   }
+  // }
 
 }
