@@ -6,13 +6,14 @@
 
     requests: {
 
-      // deleteIt: function(id) { // Delete all selected suspended tickets
-      //   return {
-      //     url: helpers.fmt('/api/v2/suspended_tickets/%@.json', id),
-      //     type: 'DELETE',
-      //     contentType: 'application/json'
-      //   };
-      // },
+      deleteIt: function() {
+        return {
+          url: '/api/v2/suspended_tickets/destroy_many.json?ids={id1},{id2},{id3}',
+          // URL format
+          // ~/api/v2/suspended_tickets/destroy_many.json?ids=11,22,33    where '11' is an integer
+          type: 'DELETE'
+        };
+      },
 
       fetchTickets: function(next_page) {
         return {
@@ -361,4 +362,6 @@
 // ------------------------------------------------------------------
 //
 //            * * * Suspended Ticket Nuke App * * *
+//               It's a mushroom cloud - get it?
+//
 //
