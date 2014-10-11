@@ -1,31 +1,30 @@
-footer {
-  font-size: 10px;
-}
-
 input {
-  margin-top: 10px;
   width: 180px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
 }
 
 .badge {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .btn-large {
-  padding: 12px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 14px;
 }
 
-.count_button {
-  padding: 12px; 
+.doge {
+  font-family: Comic Sans, Comic Sans MS, cursive;
+}
+
+.my_modal_label {
+  margin-bottom: 14px;
 }
 
 .search {
-  margin-top: 12px;
-  padding: 6px;
-  padding-left: 16px;
-  padding-right: 16px;
-}
-
-.waitingText {
-  font-family: Comic Sans, Comic Sans MS, cursive;
+  padding: 4px 22px 7px 22px;
 }

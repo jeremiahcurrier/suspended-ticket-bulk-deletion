@@ -298,7 +298,7 @@
         this.$('.my_modal').modal('hide');
         this.$('#searchString').val('');
         this.switchTo('loading2');
-        services.notify('Thanks! Please wait while we complete your request', 'notice');
+        services.notify('Completing your request, one moment please', 'notice');
         
         // this.deleteResults(this.suspended_tickets); // send 100 IDs per request to bulk delete 
         
@@ -308,7 +308,7 @@
 
         this.$('.my_modal').modal('hide');
         this.$('#searchString').val('');
-        services.notify('Oops! Value entered for suspended tickets was incorrect.', 'error');
+        services.notify('Those values don\'t match :(', 'error');
 
         //**************************************************
 

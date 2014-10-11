@@ -1,3 +1,3 @@
 <div class="modal_button_cell">
-  <button class="btn count_button">Get Suspended Tickets</button>
+  <button class="btn btn-large count_button">Get Suspended Tickets</button>
 </div>

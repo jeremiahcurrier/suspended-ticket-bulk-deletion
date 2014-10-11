@@ -1,15 +1,15 @@
 <div class="modal hide fade my_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-  <h2>Are you sure?</h2>
+  <h2>Please Confirm</h2>
   </div>
   
   <div class="modal-body">
-    <h3 class="my_modal_label">You're about to delete <span class="badge badge-success">{{idAndCause}}</span> suspended tickets. This is permanent. Please enter this value below to confirm.</h3>
+    <h3 class="my_modal_label">You're about to delete <span class="badge badge-success">{{idAndCause}}</span> suspended tickets. Please enter this value below to confirm.</h3>
     
     <div class="input-group">
       <input type="text" class="form-control" id='searchString'/>
-      <button type="submit" class="btn search">Enter</button>
+      <button type="submit" class="btn search">Submit</button>
     </div>
   </div>
 
