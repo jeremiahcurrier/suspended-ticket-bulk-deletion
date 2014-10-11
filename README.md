@@ -6,4 +6,10 @@ Please submit bug reports to [Me](https://github.com/jeremiahcurrier). Pull requ
 
 ### Screenshot(s):
 
-![](http://g.recordit.co/1EcAyPe8sk.gif)
+![](http://g.recordit.co/kytrY1eGZ3.gif)
+
+For a good time dial:
+
+```
+$ telnet qotd.nngn.net 17
+```

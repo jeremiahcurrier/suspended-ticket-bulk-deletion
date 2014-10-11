@@ -25,3 +25,7 @@ input {
   padding-left: 16px;
   padding-right: 16px;
 }
+
+.waitingText {
+  font-family: Comic Sans, Comic Sans MS, cursive;
+}

@@ -2,15 +2,16 @@
 
   return {
 
-    // Enjoy :)
+    // Welcome to the Suspended Ticket Nuke App, have a look around.
 
     requests: {
 
-      deleteIt: function() {
+      deleteIt: function(foo) {
+        var suspendedTicketIds = foo.split(',');
+
         return {
-          url: '/api/v2/suspended_tickets/destroy_many.json?ids={id1},{id2},{id3}',
-          // URL format
-          // ~/api/v2/suspended_tickets/destroy_many.json?ids=11,22,33    where '11' is an integer
+          url: '/api/v2/suspended_tickets/destroy_many.json?ids=' + suspendedTicketIds, 
+          // URL format     ~/destroy_many.json?ids=11,22,33 where 11,22,33 are comma separated integers
           type: 'DELETE'
         };
       },
@@ -98,7 +99,6 @@
       if (this.setting('\"Automated response email, delivery failed\"') === true) {
         this.blacklist_map.push("Automated response email, delivery failed");
       }
-      //new
       if (this.setting('\"Automated response email\"') === true) {
         this.blacklist_map.push("Automated response email");
       }
@@ -133,7 +133,7 @@
       //       this.ajax('deleteIt', item.id);
       //       console.log('Attempted to delete suspended ticket ' + item.id);
       //   }, this));
-      // services.notify('Suspended tickets with the causes of suspension selected in this app\'s settings have been deleted ... #nailedit', 'notice');
+
       // this.switchTo('nuke');
     },
 
@@ -164,7 +164,7 @@
         this.suspended_tickets = this.suspended_tickets.concat(data.suspended_tickets);
         this.ajax('fetchTickets', next_page);
 
-        //****************************************************************************************************************
+        //**************************************************
 
       } else if ( !previous_page && !next_page ) {  
       // Only 1 page of results 
@@ -209,6 +209,9 @@
             finalTicketCount: finalTicketCount,
             idAndCause: idAndCause.length
           });
+
+          // this.deleteResults(this.suspended_tickets); // send 100 IDs per request to bulk delete 
+
         } else {
           this.switchTo('nothingToDelete');
         }
@@ -220,9 +223,7 @@
         console.log('Total suspended tickets: ');
         console.log(finalTicketCount);
 
-        // this.deleteResults(this.suspended_tickets); // send 100 IDs per request to bulk delete 
-
-        //****************************************************************************************************************
+        //**************************************************
 
       } else { 
       // After retrieving last page of multiple pages of results
@@ -257,8 +258,6 @@
         this.allTicketsFiltered = allTicketsFiltered;
         this.idAndCause = idAndCause;
         this.finalTicketCount = finalTicketCount;
-
-        // this.deleteResults(this.suspended_tickets); // send 100 IDs per request to bulk delete 
 
         console.log('**START** DATA FROM F(X) \'filterResults\'');
 
@@ -301,15 +300,17 @@
         this.switchTo('loading2');
         services.notify('Thanks! Please wait while we complete your request', 'notice');
         
-        // this.deleteIt('getUsers'); // This would be sending the batches of 100 ids to the ~/api/v2/suspended_tickets/destroy_many.json?ids={id1},{id2}
-        //****************************************************************************************************************
+        // this.deleteResults(this.suspended_tickets); // send 100 IDs per request to bulk delete 
+        
+        //**************************************************
 
       } else {
 
         this.$('.my_modal').modal('hide');
         this.$('#searchString').val('');
         services.notify('Oops! Value entered for suspended tickets was incorrect.', 'error');
-        //****************************************************************************************************************
+
+        //**************************************************
 
       }
     },
