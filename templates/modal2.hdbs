@@ -1,34 +1,24 @@
-<!-- modal2.hdbs -->
-
 <div class="modal hide fade my_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-    <p>There are <strong style="color:green;">{{finalTicketCount}}</strong> suspended tickets in your account</p>
-    <h3 class="my_modal_label">Please verify you want to delete <strong style="color:red;">{{justPending}}</strong> suspended tickets with your selected causes of suspension</h3>
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+  <h2>Are you sure?</h2>
   </div>
   
   <div class="modal-body">
-    <formgroup>
-      <input placeholder='Type {{justPending}} here then click confirm' id='searchString'/>
-      <button class='btn search'>Confirm</button>
-    </formgroup>
+    <h3 class="my_modal_label">You're about to delete <span class="badge badge-success">{{idAndCause}}</span> suspended tickets. This is permanent. Please enter this value below to confirm.</h3>
+    
+    <div class="input-group">
+      <input type="text" class="form-control" id='searchString'/>
+      <button type="submit" class="btn search">Enter</button>
+    </div>
   </div>
-
-  <!--<div class="modal-footer">
-    <p>modal2.hdbs</p>
-    <button class="btn" data-dismiss="modal" aria-hidden="true">{{t "close_button"}}</button>
-    <button class="btn btn-primary save_button" data-dismiss="modal" aria-hidden="true">{{t "save_button"}}</button>
-  </div>-->
 
 </div>
 
 
-<!-- call the modal division above -->
+<!-- Below is what show's up in the layout.hdbs file -->
+
 
 <div class="modal_button_cell">
-  <p class="whichModal"> 'modal2.hdbs' </p>
-  <p>Suspended Tickets : {{finalTicketCount}}</p>
-  <p>Total with your selected causes = {{justPending}}</p>
-  <a class="btn btn-large" data-toggle="modal" data-target=".my_modal">{{t "modal_button"}}</a>
+  <a class="btn btn-large" data-toggle="modal" data-target=".my_modal">Delete <span class="badge badge-success">{{idAndCause}}</span> Suspended Tickets</a>
 </div>

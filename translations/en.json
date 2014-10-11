@@ -14,20 +14,6 @@
 
   // IN THE BODY OF THE APP
 
-  // DESCRIPTION
-
-  "description1": { // Unused
-    "value": "descriptionONE",
-    "title": "in app instruction part 1"
-  },
-
-  "description2": { // Unused
-    "value": "descriptionTWO",
-    "title": "in app instruction part 2"
-  },
-
-  // BUTTON
-
   "modal_button": { // this is in the modal.hdbs in the div class of "modal_button_cell"
     "value": "Delete tickets with selected causes", // TEXT IN THE button IN THE APP UI - not in the modal
     "title": "Message on the button in the sidebar app interface"
@@ -54,18 +40,5 @@
     "value": "YOU SURE (modal body) - .modal_body", // TEXT IN THE body OF THE MODAL
     "title": "Message inside a modal window that plays on the 'Keep Calm! Make a Zendesk App' phase"
   }
-
-  // INPUT AREAS in the ACTUAL MODAL
-
-  // "layout": {
-  //   "placeholder_text": {
-  //     "title": "Placeholder text in the search bar",
-  //     "value": "Total tickets returned"
-  //   },
-  //   "search_button": {
-  //     "title": "Search button when clicked triggers a search",
-  //     "value": "Submit Value"
-  //   }
-  // }
 
 }

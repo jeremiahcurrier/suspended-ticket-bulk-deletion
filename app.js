@@ -2,7 +2,17 @@
 
   return {
 
+    // Enjoy :)
+
     requests: {
+
+      // deleteIt: function(id) { // Delete all selected suspended tickets
+      //   return {
+      //     url: helpers.fmt('/api/v2/suspended_tickets/%@.json', id),
+      //     type: 'DELETE',
+      //     contentType: 'application/json'
+      //   };
+      // },
 
       fetchTickets: function(next_page) {
         return {
@@ -20,6 +30,10 @@
 
     },
 
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
     events: {
 
       // Lifecycle Events
@@ -36,107 +50,181 @@
       'click .close_button': 'cancelButton',
       'click .save_button': 'saveButton',
       'click .count_button': 'fetch',
-      'click button.search': 'getSearch'
+      'click button.search': 'getSearch',
+      'keyup #searchString': function(event){
+        if(event.keyCode === 13)
+          return this.getSearch();
+      }
 
     },
+
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
     init: function () {
+
       this.switchTo('modal');
+
+      // // Test Settings
+
+      this.blacklist_map = []; // Eventually every single cause of suspension can be added here
+      
+      if (this.setting('\"Email is from a blacklisted sender or domain\"') === true) {
+        this.blacklist_map.push("Email is from a blacklisted sender or domain");
+      }
+      if (this.setting('\"Email for \"noreply\" address\"') === true) {
+        this.blacklist_map.push("Email for \"noreply\" address");
+      }
+      if (this.setting('\"Automated response email, out of office\"') === true) {
+        this.blacklist_map.push("Automated response email, out of office");
+      }
+      if (this.setting('\"Received from Support Address\"') === true) {
+        this.blacklist_map.push("Received from Support Address");
+      }
+      if (this.setting('\"Detected as email loop\"') === true) {
+        this.blacklist_map.push("Detected as email loop");
+      }
+      if (this.setting('\"Automatic email processing failed\"') === true) {
+        this.blacklist_map.push("Automatic email processing failed");
+      }
+      if (this.setting('\"Detected as spam\"') === true) {
+        this.blacklist_map.push("Detected as spam");
+      }
+      if (this.setting('\"Submitted by registered user while logged out\"') === true) {
+        this.blacklist_map.push("Submitted by registered user while logged out");
+      }
+      if (this.setting('\"Automated response email, delivery failed\"') === true) {
+        this.blacklist_map.push("Automated response email, delivery failed");
+      }
+      //new
+      if (this.setting('\"Automated response email\"') === true) {
+        this.blacklist_map.push("Automated response email");
+      }
+      if (this.setting('\"Detected email as being from a system user\"') === true) {
+        this.blacklist_map.push("Detected email as being from a system user");
+      }
+      console.log(this.blacklist_map);
+
     },
+
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
     afterHidden: function () {
       console.log("Modal closed");
     },
 
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
     cancelButton: function() {
       console.log('.cancel_button element clicked');
     },
-    
 
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
+    deleteResults: function(suspended) {
+      // console.log('To be deleted: ' + suspended.toString());
+      // var map = this.blacklist_map;
+      // var mailFail = _.filter(suspended, function(item){
+      //       return map.indexOf(item.cause) > -1;
+      //   });
+      //   _.each(mailFail, _.bind(function(item) {
+      //       this.ajax('deleteIt', item.id);
+      //       console.log('Attempted to delete suspended ticket ' + item.id);
+      //   }, this));
+      // services.notify('Suspended tickets with the causes of suspension selected in this app\'s settings have been deleted ... #nailedit', 'notice');
+      // this.switchTo('nuke');
+    },
+
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+    
     fetch: function() {
       this.tickets = [];
       this.ajax('fetchTickets');
       this.switchTo('loading');
     },
 
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
     fetchTicketsFail: function(response) {
       services.notify('Oops... something went wrong when fetching the Suspended Tickets.');
     },
+
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
     filterResults: function(data) {
 
       var next_page = data.next_page,
           previous_page = data.previous_page;
 
-      if( next_page ) { // If there are more pages left to request data from
+      if( next_page ) { 
+      // If there are more pages left to request data from
 
         this.suspended_tickets = this.suspended_tickets.concat(data.suspended_tickets);
         this.ajax('fetchTickets', next_page);
 
-
+        //****************************************************************************************************************
 
       } else if ( !previous_page && !next_page ) {  
-
-
-
-      // Only 1 page of results
-
-
+      // Only 1 page of results 
 
         this.suspended_tickets = data.suspended_tickets;
 
-        var allTickets = this.suspended_tickets;
+        var allTickets = this.suspended_tickets,
+            finalTicketCount = data.count;
 
+        console.log('\'allTickets below\'');
         console.log(allTickets);
-        console.log('Below is an array of an array of objects containing just the { key : value } pairs for \'id\' & \'status\'');
+        console.log(allTickets.length);
+
+        console.log('***$%$%$%$%$%$%$%$%*****');
+
+        console.log('Below is an array of an array of objects containing just the { key : value } pairs for \'id\' & \'cause\'');
         
-        var allTicketsIdAndStatusOnly = _.chain(allTickets).flatten(true).map( // Thanks to https://github.com/dpawluk for this line of underscore magic
+        var allTicketsFiltered = _.chain(allTickets).flatten(true).map(
           function( x ){ 
-            return _.pick( x , 'id', 'cause'); // I sorted out this little underscore piece - go me!
+            return _.pick( x , 'id', 'cause');
           }).value();
 
-        console.log(allTicketsIdAndStatusOnly);
-        console.log('below should be only status pending???');
+        console.log('\'allTicketsFiltered\' below');
+        console.log(allTicketsFiltered);
+        console.log(allTicketsFiltered.length);
+
+        console.log('***$%$%$%$%$%$%$%$%*****');
         
-        var justPending = _.filter(allTicketsIdAndStatusOnly, function( tkt ) { // This simplified version courtesy of one https://github.com/jstjoe
-            return tkt.cause == 'Automated response email, delivery failed'; //  || tkt.status == 'open'
+        var idAndCause = _.filter(allTicketsFiltered, function( tkt ) {
+            // return tkt.cause == 'Automated response email' || 'Automated response email, delivery failed' || 'Automated response email, out of office' || 'Automatic email processing failed' || 'Detected as email loop' || 'Detected as spam' || 'Detected email as being from a system user' || 'Email for \'noreply\' address\'' || 'Email is from a blacklisted sender or domain' || 'Received from Support Address' || 'Submitted by registered user while logged out' ; //  || tkt.status == 'open'
+            return tkt.cause == 'Submitted by registered user while logged out' ;
           });
-        console.log(justPending);
 
-        
-        var finalTicketCount = data.count;
+        console.log('idAndCause which is only the cause ' + ' \'Submitted by registered user while logged out\''); // Will only include settings with 'true' values
+        console.log(idAndCause);
+        console.log(idAndCause.length);
 
-        this.switchTo('modal2', {
-          finalTicketCount: finalTicketCount,
-          justPending: justPending.length
-        });
+        console.log('***$%$%$%$%$%$%$%$%*****');
 
-        this.allTicketsIdAndStatusOnly = allTicketsIdAndStatusOnly;
-        this.justPending = justPending;
+        if (idAndCause.length > 0) {
+          this.switchTo('modal2', {
+            finalTicketCount: finalTicketCount,
+            idAndCause: idAndCause.length
+          });
+        } else {
+          this.switchTo('nothingToDelete');
+        }
+
+        this.allTicketsFiltered = allTicketsFiltered;
+        this.idAndCause = idAndCause;
         this.finalTicketCount = finalTicketCount;
 
-        // this.ajax('myDeleteAJAXRequest'); send 100 IDs per request to bulk delete       
-
-        console.log('**START** DATA FROM F(X) \'filterResults\'');
-
-        console.log(allTickets);
-        console.log(allTicketsIdAndStatusOnly);
-        console.log('****** JUST PENDING - start ****');
-        console.log(justPending);
-        console.log('****** JUST PENDING - end ****');
+        console.log('Total suspended tickets: ');
         console.log(finalTicketCount);
 
-        console.log('**END** DATA FROM F(X) \'filterResults\'');
+        // this.deleteResults(this.suspended_tickets); // send 100 IDs per request to bulk delete 
 
-        
+        //****************************************************************************************************************
 
       } else { 
-
-
-
       // After retrieving last page of multiple pages of results
-
-
 
         this.suspended_tickets = this.suspended_tickets.concat(data.suspended_tickets);
 
@@ -145,39 +233,38 @@
         console.log(allTickets);
         console.log('Below is an array of an array of objects containing just the { key : value } pairs for \'id\' & \'status\'');
         
-        var allTicketsIdAndStatusOnly = _.chain(allTickets).flatten(true).map( // Thanks to https://github.com/dpawluk for this line of underscore magic
+        var allTicketsFiltered = _.chain(allTickets).flatten(true).map( // Thanks to https://github.com/dpawluk for this line of underscore magic
           function( x ){ 
             return _.pick( x , 'id', 'cause'); // I sorted out this little underscore piece - go me!
           }).value();
 
-        console.log(allTicketsIdAndStatusOnly);
-        console.log('below should be only status pending???');
+        console.log(allTicketsFiltered);
+        console.log('Below is allTickets but only id & cause key:value pairs:');
         
-        var justPending = _.filter(allTicketsIdAndStatusOnly, function( tkt ) { // This simplified version courtesy of one https://github.com/jstjoe
-            return tkt.cause == 'Automated response email, delivery failed'; //  || tkt.status == 'open'
+        var idAndCause = _.filter(allTicketsFiltered, function( tkt ) { // This simplified version courtesy of one https://github.com/jstjoe
+            return tkt.cause == 'Submitted by registered user while logged out' ;
           });
-        console.log(justPending);
-
+        console.log(idAndCause);
         
         var finalTicketCount = data.count;
 
         this.switchTo('modal2', {
           finalTicketCount: finalTicketCount,
-          justPending: justPending.length
+          idAndCause: idAndCause.length
         });
 
-        this.allTicketsIdAndStatusOnly = allTicketsIdAndStatusOnly;
-        this.justPending = justPending;
+        this.allTicketsFiltered = allTicketsFiltered;
+        this.idAndCause = idAndCause;
         this.finalTicketCount = finalTicketCount;
 
-        // this.ajax('myDeleteAJAXRequest'); send 100 IDs per request to bulk delete       
+        // this.deleteResults(this.suspended_tickets); // send 100 IDs per request to bulk delete 
 
         console.log('**START** DATA FROM F(X) \'filterResults\'');
 
         console.log(allTickets);
-        console.log(allTicketsIdAndStatusOnly);
+        console.log(allTicketsFiltered);
         console.log('****** JUST PENDING - start ****');
-        console.log(justPending);
+        console.log(idAndCause);
         console.log('****** JUST PENDING - end ****');
         console.log(finalTicketCount);
 
@@ -186,41 +273,47 @@
       }
     },
 
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
     getSearch: function() {
 
       var allTickets = this.suspended_tickets;
-      var allTicketsIdAndStatusOnly = this.allTicketsIdAndStatusOnly;
-      var justPending = this.justPending;
+      var allTicketsFiltered = this.allTicketsFiltered;
+      var idAndCause = this.idAndCause;
       var finalTicketCount = this.finalTicketCount;
 
       console.log('**START** DATA FROM F(X) \'getSearch\'');
 
       console.log(allTickets);
-      console.log(allTicketsIdAndStatusOnly);
-      console.log(justPending);
+      console.log(allTicketsFiltered);
+      console.log(idAndCause);
       console.log(finalTicketCount);
 
       console.log('**END** DATA FROM F(X) \'getSearch\'');
 
       var result = this.$('input#searchString').val();
 
-      if (result == justPending.length ) {
+      if (result == idAndCause.length ) {
 
         this.$('.my_modal').modal('hide');
         this.$('#searchString').val('');
         this.switchTo('loading2');
-        services.notify('Number entered matches the Pending ticket count - sending ~/users.json request', 'notice');
+        services.notify('Thanks! Please wait while we complete your request', 'notice');
         
-        this.ajax('getUsers'); // This would be sending the batches of 100 ids to the ~/api/v2/suspended_tickets/destroy_many.json?ids={id1},{id2}
+        // this.deleteIt('getUsers'); // This would be sending the batches of 100 ids to the ~/api/v2/suspended_tickets/destroy_many.json?ids={id1},{id2}
+        //****************************************************************************************************************
 
       } else {
 
         this.$('.my_modal').modal('hide');
         this.$('#searchString').val('');
-        services.notify('Number entered doesn\'t match the Pending ticket count', 'error');
+        services.notify('Oops! Value entered for suspended tickets was incorrect.', 'error');
+        //****************************************************************************************************************
 
       }
     },
+
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
     getUsersDone: function(data) {
       var results = data.count;
@@ -230,9 +323,13 @@
       });
     },
 
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
     getUsersFail: function() {
       services.notify('getUsers failed request', 'error');
     },
+
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
     saveButton: function() {
 
@@ -241,6 +338,27 @@
 
     }
 
+    // So wait, is this like the end of the movie after the credits where there are the outtakes?
+
   };
 
 }());
+// 
+//            * * * Suspended Ticket Nuke App * * *
+// 
+//
+//                      __,-~~/~    `---.
+//                    _/_,---(      ,    )
+//                __ /        <    /   )  \___
+// - ------===;;;'====------------------===;;;===----- -  -
+//                   \/  ~"~"~"~"~"~\~"~)~"/
+//                   (_ (   \  (     >    \)
+//                    \_( _ <         >_>'
+//                       ~ `-i' ::>|--"
+//                           I;|.|.|
+//                          <|i::|i|`.
+//                         (` ^'"`-' ")
+// ------------------------------------------------------------------
+//
+//            * * * Suspended Ticket Nuke App * * *
+//

@@ -1,4 +1,3 @@
-<p class="whichModal"> 'loading2.hdbs' </p>
-<p>Printing IDs of all suspended tickets to your Javascript console</p>
-<!--<img src="{{assetURL "simpsons.gif"}}" />-->
-{{spinner "dotted"}}
+<h1 class="waiting">{{spinner "dotted"}}</h1>
+<img class="waiting" src="{{assetURL "drummercat.gif"}}" />
+<p>thank you for waiting just relax the tickets are going to a better place and we love you (like a friend)</p>

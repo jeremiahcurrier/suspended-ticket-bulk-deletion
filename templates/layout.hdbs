@@ -4,7 +4,5 @@
 </header>
 <section data-main/>
 <footer>
-This is <a href="mailto:{{author.email}}">{{author.name}}</a>'s Footer
+Built by <a href="mailto:{{author.email}}">{{author.name}}</a>
 </footer>
-
-<!-- <div>placeholder 1 = {{t "description1"}} & placeholder 2 = {{t "description2"}}</div> -->
