@@ -6,11 +6,10 @@
 
     requests: {
 
-      deleteIt: function(foo) {
-        var suspendedTicketIds = foo.split(',');
-
+      deleteIt: function() { // deleteIt: function(foo) {
+        // var suspendedTicketIds = foo.split(',');
         return {
-          url: '/api/v2/suspended_tickets/destroy_many.json?ids=' + suspendedTicketIds, 
+          url: '/api/v2/suspended_tickets/destroy_many.json?ids=', // + suspendedTicketIds, 
           // URL format     ~/destroy_many.json?ids=11,22,33 where 11,22,33 are comma separated integers
           type: 'DELETE'
         };
@@ -19,13 +18,6 @@
       fetchTickets: function(next_page) {
         return {
           url: next_page || '/api/v2/suspended_tickets.json',
-          type: 'GET'
-        };
-      },
-
-      getUsers: function() {
-        return {
-          url: '/api/v2/users.json',
           type: 'GET'
         };
       }
@@ -45,12 +37,9 @@
       // AJAX Events & Callbacks
       'fetchTickets.done':'filterResults',
       'fetchTickets.fail':'fetchTicketsFail',
-      'getUsers.done': 'getUsersDone',
-      'getUsers.fail': 'getUsersFail',
       
       // DOM Events
       'click .close_button': 'cancelButton',
-      'click .save_button': 'saveButton',
       'click .count_button': 'fetch',
       'click button.search': 'getSearch',
       'keyup #searchString': function(event){
@@ -68,9 +57,7 @@
 
       this.switchTo('modal');
 
-      // // Test Settings
-
-      this.blacklist_map = []; // Eventually every single cause of suspension can be added here
+      this.blacklist_map = []; // build array of substrings containing causes of suspension
       
       if (this.setting('\"Email is from a blacklisted sender or domain\"') === true) {
         this.blacklist_map.push("Email is from a blacklisted sender or domain");
@@ -308,43 +295,21 @@
 
         this.$('.my_modal').modal('hide');
         this.$('#searchString').val('');
-        services.notify('Those values don\'t match :(', 'error');
+        services.notify('Values don\'t match', 'error');
 
         //**************************************************
 
       }
-    },
-
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
-    getUsersDone: function(data) {
-      var results = data.count;
-      services.notify('getUsers success', 'notice');
-      this.switchTo('nuke', {
-        results: results
-      });
-    },
-
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
-    getUsersFail: function() {
-      services.notify('getUsers failed request', 'error');
-    },
-
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
-    saveButton: function() {
-
-      console.log('.save_button element clicked');
-      // this.switchTo('loading2');
-
     }
-
-    // So wait, is this like the end of the movie after the credits where there are the outtakes?
 
   };
 
 }());
+
+// So wait, is this like the end of the movie after the credits where there are the outtakes?
+//
+//
+//
 // 
 //            * * * Suspended Ticket Nuke App * * *
 // 
@@ -364,5 +329,8 @@
 //
 //            * * * Suspended Ticket Nuke App * * *
 //               It's a mushroom cloud - get it?
+//
+//
+//
 //
 //
