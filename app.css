@@ -25,6 +25,16 @@ input {
   margin-bottom: 14px;
 }
 
+.nothingToDelete {
+  padding-bottom: 10px;
+  margin-left: 160px;
+}
+
+.nuke {
+  padding-bottom: 10px;
+  margin-left: 36px;
+}
+
 .search {
   padding: 4px 22px 7px 22px;
 }

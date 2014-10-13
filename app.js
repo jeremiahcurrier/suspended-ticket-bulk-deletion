@@ -1,16 +1,19 @@
 (function () {
 
+  // var filteredTickets = [1, 2, 3, 4];
+
   return {
 
     // Welcome to the Suspended Ticket Nuke App, have a look around.
 
     requests: {
 
-      deleteIt: function() { // deleteIt: function(foo) {
-        // var suspendedTicketIds = foo.split(',');
+      deleteIt: function(filteredTickets) {
+
+        var bar = filteredTickets;
+
         return {
-          url: '/api/v2/suspended_tickets/destroy_many.json?ids=', // + suspendedTicketIds, 
-          // URL format     ~/destroy_many.json?ids=11,22,33 where 11,22,33 are comma separated integers
+          url: '/api/v2/suspended_tickets/destroy_many.json?ids=' + bar,
           type: 'DELETE'
         };
       },
@@ -24,10 +27,6 @@
 
     },
 
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
     events: {
 
       // Lifecycle Events
@@ -39,19 +38,14 @@
       'fetchTickets.fail':'fetchTicketsFail',
       
       // DOM Events
-      'click .close_button': 'cancelButton',
-      'click .count_button': 'fetch',
-      'click button.search': 'getSearch',
-      'keyup #searchString': function(event){
+      'click .get-suspended-tickets': 'fetch',
+      'click button.button-submit': 'processInputValue', // This is confirming the value you entered matches then sending request(s) to delete suspended tickets w the relevant IDs
+      'keyup #inputValueId': function(event){
         if(event.keyCode === 13)
-          return this.getSearch();
+          return this.processInputValue();
       }
 
     },
-
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
     init: function () {
 
@@ -92,212 +86,182 @@
       if (this.setting('\"Detected email as being from a system user\"') === true) {
         this.blacklist_map.push("Detected email as being from a system user");
       }
-      console.log(this.blacklist_map);
 
     },
-
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
     afterHidden: function () {
       console.log("Modal closed");
     },
 
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+    deleteResults: function(filteredTickets) { // This function handles the IDs sending AJAX request for every 100 IDs
+      
+      this.switchTo('loading2');
+      // services.notify('Completing your request');
 
-    cancelButton: function() {
-      console.log('.cancel_button element clicked');
+      // You can only send 100 IDs per request to ~/api/v2/suspended_tickets/destroy_many.json?ids={id1},{id2},{id3},{etc}
+      // Below only sends a single request for up to the first 100 - what about 101+?
+
+      // just send first 2 from total array, then next 2 then next 2 etc
+
+      // if array larger than 100, slice 100 out of it and send AJAX request w that 100
+      // keep going until the array is smaller than 100 and send the rest
+
+      while (filteredTickets.length > 0) {
+        
+        if ( filteredTickets.length > 2 ) {
+          
+          var batch = filteredTickets.slice(0, 2);
+
+          filteredTickets.pop(batch);
+          
+          console.log(batch);
+          console.log(batch.length);
+
+          this.ajax('deleteIt', batch)
+            .done( function() {
+              this.switchTo('nuke');
+            })
+            .fail( function() { 
+              console.log('failed')
+            }
+          );
+
+        } else {
+
+          console.log('this array has 3 or less items in it');
+          console.log(filteredTickets.length);
+
+          this.ajax('deleteIt', filteredTickets)
+            .done( function() {
+              this.switchTo('nuke');
+            })
+            .fail( function() { 
+              console.log('failed')
+          });
+
+          return false;
+
+        }
+
+      }
+
     },
 
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
-    deleteResults: function(suspended) {
-      // console.log('To be deleted: ' + suspended.toString());
-      // var map = this.blacklist_map;
-      // var mailFail = _.filter(suspended, function(item){
-      //       return map.indexOf(item.cause) > -1;
-      //   });
-      //   _.each(mailFail, _.bind(function(item) {
-      //       this.ajax('deleteIt', item.id);
-      //       console.log('Attempted to delete suspended ticket ' + item.id);
-      //   }, this));
-
-      // this.switchTo('nuke');
-    },
-
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-    
     fetch: function() {
       this.tickets = [];
       this.ajax('fetchTickets');
       this.switchTo('loading');
     },
 
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
     fetchTicketsFail: function(response) {
       services.notify('Oops... something went wrong when fetching the Suspended Tickets.');
     },
-
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
     filterResults: function(data) {
 
       var next_page = data.next_page,
           previous_page = data.previous_page;
 
-      if( next_page ) { 
-      // If there are more pages left to request data from
+      if( next_page ) { // Keep sending AJAX requests until all pages of results obtained
+
+        console.log('there are more pages of results');
 
         this.suspended_tickets = this.suspended_tickets.concat(data.suspended_tickets);
         this.ajax('fetchTickets', next_page);
 
-        //**************************************************
+      } else if ( !previous_page && !next_page ) { // Only 1 page of results 
 
-      } else if ( !previous_page && !next_page ) {  
-      // Only 1 page of results 
+        console.log('there is 1 page of results');
 
         this.suspended_tickets = data.suspended_tickets;
 
         var allTickets = this.suspended_tickets,
-            finalTicketCount = data.count;
+            finalTicketCount = data.count,
+            filteredTickets = [];
 
-        console.log('\'allTickets below\'');
-        console.log(allTickets);
-        console.log(allTickets.length);
+        for (var i = 0; allTickets.length > i; i++ ) {
+          if (_.contains(this.blacklist_map, allTickets[i].cause)) {
+            console.log(allTickets[i].id); // The ID of a ticket with a cause = to a cause w true in app settings
+            console.log(allTickets[i].cause);
+            filteredTickets.push(allTickets[i].id);
+          }
+        };
 
-        console.log('***$%$%$%$%$%$%$%$%*****');
+        console.log('Here are all tickets with a cause matching a checked cause in current app setting configuration: ');
+        console.log(filteredTickets);
 
-        console.log('Below is an array of an array of objects containing just the { key : value } pairs for \'id\' & \'cause\'');
-        
-        var allTicketsFiltered = _.chain(allTickets).flatten(true).map(
-          function( x ){ 
-            return _.pick( x , 'id', 'cause');
-          }).value();
-
-        console.log('\'allTicketsFiltered\' below');
-        console.log(allTicketsFiltered);
-        console.log(allTicketsFiltered.length);
-
-        console.log('***$%$%$%$%$%$%$%$%*****');
-        
-        var idAndCause = _.filter(allTicketsFiltered, function( tkt ) {
-            // return tkt.cause == 'Automated response email' || 'Automated response email, delivery failed' || 'Automated response email, out of office' || 'Automatic email processing failed' || 'Detected as email loop' || 'Detected as spam' || 'Detected email as being from a system user' || 'Email for \'noreply\' address\'' || 'Email is from a blacklisted sender or domain' || 'Received from Support Address' || 'Submitted by registered user while logged out' ; //  || tkt.status == 'open'
-            return tkt.cause == 'Submitted by registered user while logged out' ;
-          });
-
-        console.log('idAndCause which is only the cause ' + ' \'Submitted by registered user while logged out\''); // Will only include settings with 'true' values
-        console.log(idAndCause);
-        console.log(idAndCause.length);
-
-        console.log('***$%$%$%$%$%$%$%$%*****');
-
-        if (idAndCause.length > 0) {
+        if (filteredTickets.length > 0) {
           this.switchTo('modal2', {
             finalTicketCount: finalTicketCount,
-            idAndCause: idAndCause.length
+            filteredTickets: filteredTickets.length
           });
-
-          // this.deleteResults(this.suspended_tickets); // send 100 IDs per request to bulk delete 
-
         } else {
           this.switchTo('nothingToDelete');
         }
 
-        this.allTicketsFiltered = allTicketsFiltered;
-        this.idAndCause = idAndCause;
+        // Anchoring 'filteredTickets' & 'finalTicketCount' too app at the root 'this'
+        this.filteredTickets = filteredTickets;
         this.finalTicketCount = finalTicketCount;
 
-        console.log('Total suspended tickets: ');
-        console.log(finalTicketCount);
+      } else { // Execute code once final page of results obtained
 
-        //**************************************************
-
-      } else { 
-      // After retrieving last page of multiple pages of results
+        console.log('there was more than 1 page - now all pages are obtained');
 
         this.suspended_tickets = this.suspended_tickets.concat(data.suspended_tickets);
 
-        var allTickets = this.suspended_tickets;
+        var allTickets        = this.suspended_tickets,
+            finalTicketCount  = data.count,
+            filteredTickets = [];
 
-        console.log(allTickets);
-        console.log('Below is an array of an array of objects containing just the { key : value } pairs for \'id\' & \'status\'');
-        
-        var allTicketsFiltered = _.chain(allTickets).flatten(true).map( // Thanks to https://github.com/dpawluk for this line of underscore magic
-          function( x ){ 
-            return _.pick( x , 'id', 'cause'); // I sorted out this little underscore piece - go me!
-          }).value();
+        for (var i = 0; allTickets.length > i; i++ ) {
+          if (_.contains(this.blacklist_map, allTickets[i].cause)) {
+            console.log(allTickets[i].id); // The ID of a ticket with a cause = to a cause w true in app settings
+            console.log(allTickets[i].cause);
+            filteredTickets.push(allTickets[i].id);
+          }
+        };
 
-        console.log(allTicketsFiltered);
-        console.log('Below is allTickets but only id & cause key:value pairs:');
-        
-        var idAndCause = _.filter(allTicketsFiltered, function( tkt ) { // This simplified version courtesy of one https://github.com/jstjoe
-            return tkt.cause == 'Submitted by registered user while logged out' ;
+        console.log('Here are all ticket IDs with a cause matching a checked cause in current app setting configuration: ');
+        console.log(filteredTickets);
+
+        if (filteredTickets.length > 0) {
+          this.switchTo('modal2', {
+            finalTicketCount: finalTicketCount,
+            filteredTickets: filteredTickets.length
           });
-        console.log(idAndCause);
-        
-        var finalTicketCount = data.count;
+        } else {
+          this.switchTo('nothingToDelete');
+        }
 
-        this.switchTo('modal2', {
-          finalTicketCount: finalTicketCount,
-          idAndCause: idAndCause.length
-        });
-
-        this.allTicketsFiltered = allTicketsFiltered;
-        this.idAndCause = idAndCause;
+        // Anchoring 'filteredTickets' & 'finalTicketCount' too app at the root 'this'
+        this.filteredTickets = filteredTickets;
         this.finalTicketCount = finalTicketCount;
-
-        console.log('**START** DATA FROM F(X) \'filterResults\'');
-
-        console.log(allTickets);
-        console.log(allTicketsFiltered);
-        console.log('****** JUST PENDING - start ****');
-        console.log(idAndCause);
-        console.log('****** JUST PENDING - end ****');
-        console.log(finalTicketCount);
-
-        console.log('**END** DATA FROM F(X) \'filterResults\'');
 
       }
     },
 
     //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-    getSearch: function() {
+    processInputValue: function() {
 
-      var allTickets = this.suspended_tickets;
-      var allTicketsFiltered = this.allTicketsFiltered;
-      var idAndCause = this.idAndCause;
-      var finalTicketCount = this.finalTicketCount;
+      var allTickets          = this.suspended_tickets, // All suspended tickets returned from every page of results
+          filteredTickets     = this.filteredTickets, // All suspended ticket IDs if cause = any app parameter cause that is TRUE
+          finalTicketCount    = this.finalTicketCount, // Number of total suspended tickets in the account
+          filteredTicketsSize = filteredTickets.length, // Number of total suspended tickets matched and queued for deletion
+          result              = this.$('input#inputValueId').val();
 
-      console.log('**START** DATA FROM F(X) \'getSearch\'');
-
-      console.log(allTickets);
-      console.log(allTicketsFiltered);
-      console.log(idAndCause);
-      console.log(finalTicketCount);
-
-      console.log('**END** DATA FROM F(X) \'getSearch\'');
-
-      var result = this.$('input#searchString').val();
-
-      if (result == idAndCause.length ) {
+      if (result == filteredTickets.length ) {
 
         this.$('.my_modal').modal('hide');
-        this.$('#searchString').val('');
-        this.switchTo('loading2');
-        services.notify('Completing your request, one moment please', 'notice');
-        
-        // this.deleteResults(this.suspended_tickets); // send 100 IDs per request to bulk delete 
-        
-        //**************************************************
+        this.$('#inputValueId').val('');
+
+        this.deleteResults(filteredTickets); // Pass filtered results of all matching IDs to the deleteResults function for handling
 
       } else {
 
         this.$('.my_modal').modal('hide');
-        this.$('#searchString').val('');
-        services.notify('Values don\'t match', 'error');
-
-        //**************************************************
+        this.$('#inputValueId').val('');
+        services.notify('You entered ' + result + ' - to delete the suspended tickets please enter ' + filteredTicketsSize, 'alert');
 
       }
     }
@@ -306,9 +270,6 @@
 
 }());
 
-// So wait, is this like the end of the movie after the credits where there are the outtakes?
-//
-//
 //
 // 
 //            * * * Suspended Ticket Nuke App * * *
@@ -329,8 +290,5 @@
 //
 //            * * * Suspended Ticket Nuke App * * *
 //               It's a mushroom cloud - get it?
-//
-//
-//
 //
 //
