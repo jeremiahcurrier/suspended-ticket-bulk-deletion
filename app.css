@@ -1,3 +1,5 @@
+/* Probably could clean this up when I have some time */
+
 input {
   width: 180px;
   -moz-border-radius: 4px;
@@ -17,7 +19,7 @@ input {
   font-size: 14px;
 }
 
-.doge {
+.doge { /* If you dont understand that the use of Comic Sans is a joke then just give up */
   font-family: Comic Sans, Comic Sans MS, cursive;
 }
 

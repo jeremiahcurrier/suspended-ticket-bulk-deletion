@@ -151,10 +151,9 @@
 
     filterResults: function(data) {
 
-      var next_page = data.next_page,
-          previous_page = data.previous_page;
-
-      var finalTicketCount  = data.count,
+      var next_page         = data.next_page,
+          previous_page     = data.previous_page,
+          finalTicketCount  = data.count,
           filteredTickets   = [];
 
       if( next_page ) { // Keep sending AJAX requests until all pages of results obtained
@@ -163,18 +162,12 @@
         this.suspended_tickets = this.suspended_tickets.concat(data.suspended_tickets);
 
       } else if ( !previous_page && !next_page ) { // Execute this code block if account has less than 101 suspended tickets
-        
-        // ********** ELSE IF start **********
 
         console.log('All suspended tickets retrieved - there was 1 page.');
 
         this.suspended_tickets = data.suspended_tickets;
 
-        // var allTickets = this.suspended_tickets, // allTickets
-        // var finalTicketCount  = data.count,
-        //     filteredTickets   = [];
-
-        for (var i = 0; this.suspended_tickets.length > i; i++ ) {
+        for (var i = 0; this.suspended_tickets.length > i; i++ ) { // Looping & checking if any settings causes match any suspended ticket causes
           if (_.contains(this.blacklist_map, this.suspended_tickets[i].cause)) {
             filteredTickets.push(this.suspended_tickets[i].id);
           }
@@ -189,44 +182,21 @@
           this.switchTo('nothingToDelete');
         }
 
-        // Anchoring 'filteredTickets' & 'finalTicketCount' too app at the root 'this'
+        // Anchoring 'filteredTickets' too app at the root 'this'
         
         this.filteredTickets = filteredTickets;
-        this.finalTicketCount = data.count; // finalTicketCount
-
-        console.log('********* - ELSE IF start - *********');
-        console.log(this.suspended_tickets);
-        console.log(finalTicketCount);
-        console.log(filteredTickets);
-        console.log('********* - ELSE IF end - *********');
-
-
-        // ********** ELSE IF end **********
 
       } else { // Execute this code block once final page of paginated results retrieved
-        
-        // ********** ELSE start **********
 
         console.log('All suspended tickets retrieved - there were 2+ pages.');
 
         this.suspended_tickets = this.suspended_tickets.concat(data.suspended_tickets);
 
-        // var allTickets        = this.suspended_tickets, // allTickets
-        // var finalTicketCount  = data.count,
-        //       filteredTickets = [];
-
-        for (var j = 0; this.suspended_tickets.length > j; j++ ) {
+        for (var j = 0; this.suspended_tickets.length > j; j++ ) { // Looping & checking if any settings causes match any suspended ticket causes
           if (_.contains(this.blacklist_map, this.suspended_tickets[j].cause)) {
             filteredTickets.push(this.suspended_tickets[j].id);
           }
         }
-
-        console.log('********* - ELSE start - *********');
-        console.log(this.suspended_tickets);
-        console.log(finalTicketCount);
-        console.log(filteredTickets);
-        console.log('********* - ELSE end - *********');
-
 
         if (filteredTickets.length > 0) {
           this.switchTo('modal2', {
@@ -237,15 +207,9 @@
           this.switchTo('nothingToDelete');
         }
 
-        // Anchoring 'filteredTickets' & 'finalTicketCount' too app at the root 'this'
-
-        // console.log(data.count);
+        // Anchoring 'filteredTickets' too app at the root 'this'
 
         this.filteredTickets = filteredTickets;
-        // this.finalTicketCount = data.count; // finalTicketCount
-
-
-        // ********** ELSE end **********
 
       }
     
@@ -255,9 +219,7 @@
 
     processInputValue: function() {
 
-      // var allTickets          = this.suspended_tickets, // All suspended ticket objects returned for the account
       var filteredTickets     = this.filteredTickets, // All suspended ticket IDs if cause = any app parameter cause that is TRUE
-          // finalTicketCount    = this.finalTicketCount, // Total count suspended tickets in entire account
           filteredTicketsSize = filteredTickets.length, // Number of total suspended tickets with cause matching a true checkbox in app settings
           result              = this.$('input#inputValueId').val();
 
@@ -265,7 +227,7 @@
 
         this.$('.my_modal').modal('hide');
         this.$('#inputValueId').val('');
-
+        // The nuke is dropping below this line - stand back everyone
         this.deleteResults(filteredTickets); // Pass filtered results of all matching IDs to the deleteResults function for handling
 
       } else {
@@ -303,3 +265,6 @@
 //               It's a mushroom cloud - get it?
 //
 //
+//
+//
+// Oh yes I did...
