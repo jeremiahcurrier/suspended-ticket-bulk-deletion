@@ -161,7 +161,7 @@
         this.ajax('fetchTickets', next_page);
         this.suspended_tickets = this.suspended_tickets.concat(data.suspended_tickets);
 
-      } else if ( !previous_page && !next_page ) { // Execute this code block if account has less than 101 suspended tickets
+      } else if ( !previous_page && !next_page ) { // Execute this code block if account has LESS THAN 101 suspended tickets
 
         console.log('All suspended tickets retrieved - there was 1 page.');
 
@@ -181,12 +181,10 @@
         } else {
           this.switchTo('nothingToDelete');
         }
-
-        // Anchoring 'filteredTickets' too app at the root 'this'
         
-        this.filteredTickets = filteredTickets;
+        this.filteredTickets = filteredTickets; // Anchoring 'filteredTickets' too app at the root 'this'
 
-      } else { // Execute this code block once final page of paginated results retrieved
+      } else { // Execute this code block once FINAL page of paginated results retrieved
 
         console.log('All suspended tickets retrieved - there were 2+ pages.');
 
@@ -207,9 +205,7 @@
           this.switchTo('nothingToDelete');
         }
 
-        // Anchoring 'filteredTickets' too app at the root 'this'
-
-        this.filteredTickets = filteredTickets;
+        this.filteredTickets = filteredTickets; // Anchoring 'filteredTickets' too app at the root 'this'
 
       }
     
