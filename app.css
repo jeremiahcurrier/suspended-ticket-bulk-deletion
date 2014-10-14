@@ -38,3 +38,7 @@ input {
 .search {
   padding: 4px 22px 7px 22px;
 }
+
+.wait {
+  padding-bottom: 10px;
+}

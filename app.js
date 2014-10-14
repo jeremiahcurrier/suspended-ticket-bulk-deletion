@@ -98,7 +98,7 @@
 
     deleteResults: function(filteredTickets) { // This function handles the IDs sending AJAX request for every 100 IDs
 
-      this.switchTo('loading2');
+      this.switchTo('loading');
 
       services.notify('Deleting ' + filteredTickets.length + ' suspended tickets.', 'notice');
 
@@ -111,27 +111,21 @@
             console.log('Batch of suspended tickets deleted successfully - while loop continues..')
           )
           .fail(
-            console.log('Failed to delete **batch** of suspended tickets.')
+            console.log('Failed to delete suspended tickets ' + batch)
           );
-
-        console.log('These were deleted: ');
-        console.log(batch);
-        console.log('Here are the remaining IDs: ');
-        console.log(filteredTickets);
       }
 
       if (filteredTickets.length <= 100) { // There are 2 or fewer IDs to delete so send filteredTickets to 'deleteIt'
 
         console.log('less than or equal to 2 tickets');
 
-        this.ajax('deleteIt', filteredTickets) // Send this batch to 'deleteItBatch'
+        this.ajax('deleteIt', filteredTickets) // Send last batch to 'deleteIt'
           .done( function() {
-              console.log('Suspended tickets deleted successfully. Nothing else to delete.');
               this.switchTo('nuke');
-              services.notify('All selected tickets have been deleted, thanks for waiting!');
+              services.notify('Suspended tickets deleted successfully.');
           })
           .fail( function() { 
-              console.log('Failed to delete suspended tickets.');
+              console.log('Failed to delete suspended tickets ' + filteredTickets);
           });
       
       }
@@ -160,6 +154,9 @@
       var next_page = data.next_page,
           previous_page = data.previous_page;
 
+      var finalTicketCount  = data.count,
+          filteredTickets   = [];
+
       if( next_page ) { // Keep sending AJAX requests until all pages of results obtained
 
         this.ajax('fetchTickets', next_page);
@@ -173,15 +170,13 @@
 
         this.suspended_tickets = data.suspended_tickets;
 
-        var allTickets = this.suspended_tickets,
-            finalTicketCount = data.count,
-            filteredTickets = [];
+        // var allTickets = this.suspended_tickets, // allTickets
+        // var finalTicketCount  = data.count,
+        //     filteredTickets   = [];
 
-        for (var i = 0; allTickets.length > i; i++ ) {
-          if (_.contains(this.blacklist_map, allTickets[i].cause)) {
-            // console.log(allTickets[i].id); // The ID of a ticket with a cause = to a cause w true in app settings
-            // console.log(allTickets[i].cause);
-            filteredTickets.push(allTickets[i].id);
+        for (var i = 0; this.suspended_tickets.length > i; i++ ) {
+          if (_.contains(this.blacklist_map, this.suspended_tickets[i].cause)) {
+            filteredTickets.push(this.suspended_tickets[i].id);
           }
         }
 
@@ -197,7 +192,14 @@
         // Anchoring 'filteredTickets' & 'finalTicketCount' too app at the root 'this'
         
         this.filteredTickets = filteredTickets;
-        this.finalTicketCount = finalTicketCount;
+        this.finalTicketCount = data.count; // finalTicketCount
+
+        console.log('********* - ELSE IF start - *********');
+        console.log(this.suspended_tickets);
+        console.log(finalTicketCount);
+        console.log(filteredTickets);
+        console.log('********* - ELSE IF end - *********');
+
 
         // ********** ELSE IF end **********
 
@@ -209,19 +211,22 @@
 
         this.suspended_tickets = this.suspended_tickets.concat(data.suspended_tickets);
 
-        console.log(this.suspended_tickets);
+        // var allTickets        = this.suspended_tickets, // allTickets
+        // var finalTicketCount  = data.count,
+        //       filteredTickets = [];
 
-        var allTickets        = this.suspended_tickets,
-            finalTicketCount  = data.count,
-            filteredTickets = [];
-
-        for (var i = 0; allTickets.length > i; i++ ) {
-          if (_.contains(this.blacklist_map, allTickets[i].cause)) {
-            // console.log(allTickets[i].id); // The ID of a ticket with a cause = to a cause w true in app settings
-            // console.log(allTickets[i].cause);
-            filteredTickets.push(allTickets[i].id);
+        for (var j = 0; this.suspended_tickets.length > j; j++ ) {
+          if (_.contains(this.blacklist_map, this.suspended_tickets[j].cause)) {
+            filteredTickets.push(this.suspended_tickets[j].id);
           }
         }
+
+        console.log('********* - ELSE start - *********');
+        console.log(this.suspended_tickets);
+        console.log(finalTicketCount);
+        console.log(filteredTickets);
+        console.log('********* - ELSE end - *********');
+
 
         if (filteredTickets.length > 0) {
           this.switchTo('modal2', {
@@ -234,8 +239,11 @@
 
         // Anchoring 'filteredTickets' & 'finalTicketCount' too app at the root 'this'
 
+        // console.log(data.count);
+
         this.filteredTickets = filteredTickets;
-        this.finalTicketCount = finalTicketCount;
+        // this.finalTicketCount = data.count; // finalTicketCount
+
 
         // ********** ELSE end **********
 
@@ -247,9 +255,9 @@
 
     processInputValue: function() {
 
-      var allTickets          = this.suspended_tickets, // All suspended ticket objects returned for the account
-          filteredTickets     = this.filteredTickets, // All suspended ticket IDs if cause = any app parameter cause that is TRUE
-          finalTicketCount    = this.finalTicketCount, // Total count suspended tickets in entire account
+      // var allTickets          = this.suspended_tickets, // All suspended ticket objects returned for the account
+      var filteredTickets     = this.filteredTickets, // All suspended ticket IDs if cause = any app parameter cause that is TRUE
+          // finalTicketCount    = this.finalTicketCount, // Total count suspended tickets in entire account
           filteredTicketsSize = filteredTickets.length, // Number of total suspended tickets with cause matching a true checkbox in app settings
           result              = this.$('input#inputValueId').val();
 
