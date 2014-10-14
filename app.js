@@ -1,7 +1,5 @@
 (function () {
 
-  // var filteredTickets = [1, 2, 3, 4];
-
   return {
 
     // Welcome to the Suspended Ticket Nuke App, have a look around.
@@ -109,12 +107,12 @@
         var batch = filteredTickets.splice(0, 100);
         
         this.ajax('deleteItBatch', batch) // Send this batch to 'deleteItBatch'
-          .done( function() {
-              console.log('Batch of suspended tickets deleted successfully - while loop continues..');
-          })
-          .fail( function() { 
-              console.log('Failed to delete **batch** of suspended tickets.');
-          });
+          .done(
+            console.log('Batch of suspended tickets deleted successfully - while loop continues..')
+          )
+          .fail(
+            console.log('Failed to delete **batch** of suspended tickets.')
+          );
 
         console.log('These were deleted: ');
         console.log(batch);
