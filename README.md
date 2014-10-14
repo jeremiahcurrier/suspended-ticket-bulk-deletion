@@ -6,7 +6,7 @@ Please submit bug reports to [Me](https://github.com/jeremiahcurrier). Pull requ
 
 ### Screenshot(s):
 
-![](http://g.recordit.co/kytrY1eGZ3.gif)
+![](http://g.recordit.co/OAsgMdxDGq.gif)
 
 For a good time dial:
 
