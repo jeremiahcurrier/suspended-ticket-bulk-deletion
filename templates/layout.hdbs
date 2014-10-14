@@ -1,5 +1,4 @@
 <header>
-  <span class="logo"/>
-  <h3>{{setting "name"}}</h3>
+  <h1>{{setting "name"}}</h1>
 </header>
 <section data-main/>

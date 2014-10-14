@@ -1,5 +1,5 @@
 <!-- Below is what show's up in the layout.hdbs file -->
 
 <div class="modal_button_cell">
-  <button class="btn btn-large get-suspended-tickets">Get Suspended Tickets</button>
+  <button class="btn btn-large get-suspended-tickets" type="button">Get Suspended Tickets</button>
 </div>

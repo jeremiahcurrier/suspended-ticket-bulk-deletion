@@ -100,7 +100,7 @@
 
       this.switchTo('loading');
 
-      services.notify('Deleting ' + filteredTickets.length + ' suspended tickets.', 'notice');
+      services.notify('Deleting ' + filteredTickets.length + ' suspended tickets', 'notice');
 
       while (filteredTickets.length > 100) { // There are more than n tickets in filteredTickets - sending it in pieces to 'deleteItBatch'
         
@@ -122,7 +122,7 @@
         this.ajax('deleteIt', filteredTickets) // Send last batch to 'deleteIt'
           .done( function() {
               this.switchTo('nuke');
-              services.notify('Suspended tickets deleted successfully.');
+              services.notify('Suspended tickets deleted successfully');
           })
           .fail( function() { 
               console.log('Failed to delete suspended tickets ' + filteredTickets);
