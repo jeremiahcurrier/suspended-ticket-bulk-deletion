@@ -2,7 +2,7 @@
 
   return {
 
-    // Welcome to the Suspended Ticket Nuke App, have a look around.
+    // Welcome to the Suspended Ticket Nuke App, have a look around :)
 
     requests: {
 
@@ -156,6 +156,8 @@
           finalTicketCount  = data.count,
           filteredTickets   = [];
 
+      // Welcome to 'If/Else-landia'
+
       if( next_page ) { // Keep sending AJAX requests until all pages of results obtained
 
         this.ajax('fetchTickets', next_page);
@@ -196,6 +198,8 @@
           }
         }
 
+        // :poop: <-- Easter Egg
+
         if (filteredTickets.length > 0) {
           this.switchTo('modal2', {
             finalTicketCount: finalTicketCount,
@@ -208,6 +212,8 @@
         this.filteredTickets = filteredTickets; // Anchoring 'filteredTickets' too app at the root 'this'
 
       }
+
+      // Now leaving 'If/Else-landia', thanks for stopping by!
     
     },
 
