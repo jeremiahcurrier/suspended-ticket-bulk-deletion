@@ -2,8 +2,6 @@
 
   return {
 
-    // Welcome to the Suspended Ticket Nuke App, have a look around :)
-
     requests: {
 
       deleteIt: function(filteredTickets) { // The only or the remaining IDs from 'filteredTickets'
@@ -29,8 +27,6 @@
 
     },
 
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
     events: {
 
       // Lifecycle Events
@@ -41,8 +37,8 @@
       'fetchTickets.fail':'fetchTicketsFail',
       
       // DOM Events
-      'click .get-suspended-tickets': 'fetch',
-      'click button.button-submit': 'processInputValue', // This is confirming the value you entered matches then sending request(s) to delete suspended tickets w the relevant IDs
+      'click .filter-all': 'fetch',
+      'click .submit': 'processInputValue', // This is confirming the value you entered matches then sending request(s) to delete suspended tickets w the relevant IDs
       'keyup #inputValueId': function(event){
         if(event.keyCode === 13)
           return this.processInputValue();
@@ -50,9 +46,12 @@
 
     },
 
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
     init: function () {
+
+      this.popover({
+        width: 300,
+        height: 300
+      });
 
       this.switchTo('modal');
 
@@ -94,8 +93,6 @@
 
     },
 
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
     deleteResults: function(filteredTickets) { // This function handles the IDs sending AJAX request for every 100 IDs
 
       this.switchTo('loading');
@@ -132,31 +129,23 @@
 
     },
 
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
     fetch: function() {
       this.suspended_tickets = [];
       this.ajax('fetchTickets');
       this.switchTo('loading');
     },
 
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
     fetchTicketsFail: function(response) {
-      services.notify('Oops... something went wrong when fetching the Suspended Tickets.');
+      services.notify('Oops... something went wrong when getting the Suspended Tickets.');
       console.log(response);
     },
 
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
-    filterResults: function(data) {
+    filterResults: function(data) { // Get all suspended tickets, filter for IDs w cause matching any app settings cause that's true
 
       var next_page         = data.next_page,
           previous_page     = data.previous_page,
           finalTicketCount  = data.count,
           filteredTickets   = [];
-
-      // Welcome to 'If/Else-landia'
 
       if( next_page ) { // Keep sending AJAX requests until all pages of results obtained
 
@@ -165,7 +154,7 @@
 
       } else if ( !previous_page && !next_page ) { // Execute this code block if account has LESS THAN 101 suspended tickets
 
-        console.log('All suspended tickets retrieved - there was 1 page.');
+        // console.log('All suspended tickets retrieved - there was 1 page.');
 
         this.suspended_tickets = data.suspended_tickets;
 
@@ -176,7 +165,7 @@
         }
 
         if (filteredTickets.length > 0) {
-          this.switchTo('modal2', {
+          this.switchTo('confirm', {
             finalTicketCount: finalTicketCount,
             filteredTickets: filteredTickets.length
           });
@@ -188,7 +177,7 @@
 
       } else { // Execute this code block once FINAL page of paginated results retrieved
 
-        console.log('All suspended tickets retrieved - there were 2+ pages.');
+        // console.log('All suspended tickets retrieved - there were 2+ pages.');
 
         this.suspended_tickets = this.suspended_tickets.concat(data.suspended_tickets);
 
@@ -198,10 +187,8 @@
           }
         }
 
-        // :poop: <-- Easter Egg
-
         if (filteredTickets.length > 0) {
-          this.switchTo('modal2', {
+          this.switchTo('confirm', {
             finalTicketCount: finalTicketCount,
             filteredTickets: filteredTickets.length
           });
@@ -212,32 +199,21 @@
         this.filteredTickets = filteredTickets; // Anchoring 'filteredTickets' too app at the root 'this'
 
       }
-
-      // Now leaving 'If/Else-landia', thanks for stopping by!
     
     },
 
-    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
-    processInputValue: function() {
+    processInputValue: function() { // Evaluate entered value vs value to delete
 
       var filteredTickets     = this.filteredTickets, // All suspended ticket IDs if cause = any app parameter cause that is TRUE
           filteredTicketsSize = filteredTickets.length, // Number of total suspended tickets with cause matching a true checkbox in app settings
           result              = this.$('input#inputValueId').val();
 
       if (result == filteredTickets.length ) {
-
-        this.$('.my_modal').modal('hide');
         this.$('#inputValueId').val('');
-        // The nuke is dropping below this line - stand back everyone
         this.deleteResults(filteredTickets); // Pass filtered results of all matching IDs to the deleteResults function for handling
-
       } else {
-
-        this.$('.my_modal').modal('hide');
         this.$('#inputValueId').val('');
-        services.notify('You entered ' + result + ' - to delete the suspended tickets please enter ' + filteredTicketsSize, 'alert');
-
+        services.notify('Please enter ' + filteredTicketsSize + ' to confirm', 'error');
       }
     }
 
@@ -263,10 +239,3 @@
 //                         (` ^'"`-' ")
 // ------------------------------------------------------------------
 //
-//            * * * Suspended Ticket Nuke App * * *
-//               It's a mushroom cloud - get it?
-//
-//
-//
-//
-// Oh yes I did...

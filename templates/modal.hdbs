@@ -1,5 +1,1 @@
-<!-- Below is what show's up in the layout.hdbs file -->
-
-<div class="modal_button_cell">
-  <button class="btn btn-large get-suspended-tickets" type="button">Get Suspended Tickets</button>
-</div>
+<button class="btn filter-all" type="button">Filter All Suspended Tickets</button>

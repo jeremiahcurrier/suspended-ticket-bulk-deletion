@@ -8,4 +8,4 @@ Please send your bug reports to [Jeremiah Currier](https://github.com/jeremiahcu
 
 ### Screenshot(s):
 
-![](http://g.recordit.co/OAsgMdxDGq.gif)
+![](http://g.recordit.co/trVFzChoqp.gif)

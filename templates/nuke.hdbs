@@ -1,2 +1,2 @@
-<h3 class="nuke">Suspended Tickets Deleted</h3>
+<p class="nuke">suspended tickets deleted</p>
 <img src="{{assetURL "nuke.gif"}}" />

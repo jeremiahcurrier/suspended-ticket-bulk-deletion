@@ -1,46 +1,25 @@
-/* Probably could clean this up when I have some time */
+/*This app desperately needs styling*/
 
-input {
-  width: 180px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
+.confirm {
+  margin-bottom: 10px;
 }
 
-.badge {
-  font-size: 16px;
+.filter-all {
+  width: 100%;
 }
 
-.btn-large {
-  padding-top: 16px;
-  padding-bottom: 16px;
-  padding-left: 10px;
-  padding-right: 10px;
-  font-size: 14px;
-  background-color: #f8f8f8;
-}
-
-.doge { /* If you dont understand that the use of Comic Sans is a joke then just give up */
-  font-family: Comic Sans, Comic Sans MS, cursive;
-}
-
-.my_modal_label {
-  margin-bottom: 14px;
+.form-control {
+  width: 60%;
 }
 
 .nothingToDelete {
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
-.nuke {
-  padding-bottom: 10px;
-  margin-left: 36px;
+.submit {
+  width: 32%;
 }
 
-.search {
-  padding: 4px 22px 7px 22px;
-}
-
-.wait {
-  padding-bottom: 10px;
+.waiting {
+  width: 100%;
 }

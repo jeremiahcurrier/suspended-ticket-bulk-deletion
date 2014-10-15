@@ -1,4 +1,4 @@
 <header>
-  <h1>{{setting "name"}}</h1>
+  <h3>{{setting "name"}}</h3>
 </header>
 <section data-main/>
