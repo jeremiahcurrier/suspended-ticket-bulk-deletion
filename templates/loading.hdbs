@@ -1,2 +1,1 @@
-<!--{{spinner "dotted"}}-->
-<img class="waiting" src="{{assetURL "waiting.gif"}}" />
+{{spinner "dotted"}}
