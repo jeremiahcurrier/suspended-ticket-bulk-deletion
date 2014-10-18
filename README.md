@@ -1,10 +1,9 @@
 # Suspended Ticket Nuke App
 
-Select causes of suspension in the app settings then the app is used to bulk delete all suspended tickets with the selected causes.
+* Select causes of suspension in the app settings
+* Bulk delete all suspended tickets based on current app settings
 
-Currently there is no bulk recover functionality however that is planned for the next release.
-
-Please send your bug reports to [Jeremiah Currier](https://github.com/jeremiahcurrier). Pull requests are welcome.
+Pull requests are welcome.
 
 ### Screenshot(s):
 
