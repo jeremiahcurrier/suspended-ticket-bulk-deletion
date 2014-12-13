@@ -8,8 +8,8 @@
   "defaultLocale" : "en",
   "singleInstall" : true,
   "private" : true,
-  "location" : "top_bar",
-  "version" : "1.0",
+  "location" : "nav_bar",
+  "version" : "1.4",
   "frameworkVersion" : "1.0",
   "parameters" : [
     {
