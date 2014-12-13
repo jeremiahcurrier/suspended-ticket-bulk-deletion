@@ -1,5 +1,19 @@
 {
   "app": {
+
+    "parameters": {
+      "\"Automated response email\"":  { "label": "\"Automated response email\"", "helpText": "General automated response email message from a server." },
+      "\"Automated response email, delivery failed\"": { "label": "\"Automated response email, delivery failed\"", "helpText": "This indicates that an outgoing email notification was not delivered to its recipient. The delivery failure email response is suspended so that a ticket is not created." },
+      "\"Automated response email, out of office\"": { "label": "\"Automated response email, out of office\"", "helpText": "Out of office and vacation auto-generated response emails are suspended." },
+      "\"Automatic email processing failed\"": { "label": "\"Automatic email processing failed\""},
+      "\"Detected as email loop\"": { "label": "\"Detected as email loop\"", "helpText": "If you receive a large number of emails from a single sender in a short period of time, those emails are suspended and the sender's address is blacklisted for one hour. This also happens to tickets that are sent from an address equal to your default Reply To address." },
+      "\"Detected as spam\"": { "label": "\"Detected as spam\"", "helpText": "The email has been flagged as spam with a probability lower than 99%. If the probability is 99%, the email is rejected. The email might also have been flagged as spam because it is from a suspended user." },
+      "\"Detected email as being from a system user\"": { "label": "\"Detected email as being from a system user\"", "helpText": "The email message came from an address associated with your Zendesk, and as such would cause a loop." },
+      "\"Email for \"noreply\" address\"": { "label": "\"Email for \"noreply\" address\"", "helpText": "For example noreply@domain.com" },
+      "\"Email is from a blacklisted sender or domain\"": { "label": "\"Email is from a blacklisted sender or domain\"", "The email came from an address or domain that you've blacklisted." },
+      "\"Received from Support Address\"": { "label": "\"Received from Support Address\"", "helpText": "This email has placed the Requester as a Support Address. A Support Address can't be the Requester on a ticket, sorry." },
+      "\"Submitted by registered user while logged out\"": { "label": "\"Submitted by registered user while logged out\"", "helpText": "If a registered user submits a ticket using the Submit a Request form while they are not logged in, the ticket will be suspended and a verification email will be sent to them. When the user clicks the verification link in the email the ticket will be unsuspended." }
+    },
     "package": "modal_sample_app",
     "description":  {
       "value": "Discover all about modal specific events, and invoking a modal",
