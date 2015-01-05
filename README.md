@@ -9,10 +9,12 @@ Pull requests are welcome.
 * Ability to toggle the causes of suspension used within the app so configuration does not require updating the app settings
 * 'Refresh' button
 
-# Demo
+### Demo
 ![Animated GIF](http://g.recordit.co/1GGkCPjdpA.gif)
 
-# User Guide
+---
+
+### User Guide
 **1: Choose any/all causes of suspension in the app settings**
 
 ![](http://i.imgur.com/V5W2VSb.png)
