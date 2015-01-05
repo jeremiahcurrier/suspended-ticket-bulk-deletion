@@ -7,23 +7,23 @@ A full-page nav bar app for bulk deleting suspended tickets by specified causes 
 
 1. Choose any/all causes of suspension in the app settings
 
-![]()
+![](http://i.imgur.com/V5W2VSb.png)
 
 2. Find all matching suspended tickets
 
-![]()
+![](http://i.imgur.com/SotIjDe.png)
 
 3. Confirm the number of suspended tickets that will be bulk deleted. If the value entered does not match the bulk deletion will be prevented
 
-![]()
+![](http://i.imgur.com/yoYRN12.png)
 
 4. The following displays when all matching suspended tickets have been bulk deleted
 
-![]()
+![](http://i.imgur.com/XhExeMd.png)
 
 5. The following displays when there are not suspended tickets found that match the selected causes of suspension configured in the app's settings
 
-![]()
+![](http://i.imgur.com/lduoVug.png)
 
 # Feature Roadmap
 
