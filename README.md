@@ -5,6 +5,13 @@ A full-page nav bar app for bulk deleting suspended tickets by specified causes 
 
 Pull requests are welcome.
 
+# Feature Roadmap
+* Ability to toggle the causes of suspension used within the app so configuration does not require updating the app settings
+* 'Refresh' button
+
+# Demo
+![Animated GIF](http://g.recordit.co/1GGkCPjdpA.gif)
+
 # User Guide
 **1: Choose any/all causes of suspension in the app settings**
 
@@ -25,10 +32,3 @@ Pull requests are welcome.
 **5: The following displays when there are not suspended tickets found that match the selected causes of suspension configured in the app's settings**
 
 ![](http://i.imgur.com/lduoVug.png)
-
-# Feature Roadmap
-* Ability to toggle the causes of suspension used within the app so configuration does not require updating the app settings
-* 'Refresh' button
-
-# Demo
-![Animated GIF](http://g.recordit.co/1GGkCPjdpA.gif)
