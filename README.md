@@ -11,4 +11,4 @@ Pull requests are welcome, but you knew that.
 
 ### Screenshot(s):
 
-![](http://recordit.co/1GGkCPjdpA)
+![](http://g.recordit.co/1GGkCPjdpA.gif)
