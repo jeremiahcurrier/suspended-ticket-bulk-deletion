@@ -4,25 +4,15 @@
 A full-page nav bar app for bulk deleting suspended tickets by specified causes of suspension. Enabled causes are configured in the app's settings. The app settings are used to determine which causes of suspension to include when fetching the suspended tickets intended for bulk deletion.
 
 # User Guide
-
-1. Choose any/all causes of suspension in the app settings
-
+**Choose any/all causes of suspension in the app settings**
 ![](http://i.imgur.com/V5W2VSb.png)
-
-2. Find all matching suspended tickets
-
+**Find all matching suspended tickets**
 ![](http://i.imgur.com/SotIjDe.png)
-
-3. Confirm the number of suspended tickets that will be bulk deleted. If the value entered does not match the bulk deletion will be prevented
-
+**Confirm the number of suspended tickets that will be bulk deleted. If the value entered does not match the bulk deletion will be prevented**
 ![](http://i.imgur.com/yoYRN12.png)
-
-4. The following displays when all matching suspended tickets have been bulk deleted
-
+**The following displays when all matching suspended tickets have been bulk deleted**
 ![](http://i.imgur.com/XhExeMd.png)
-
-5. The following displays when there are not suspended tickets found that match the selected causes of suspension configured in the app's settings
-
+**The following displays when there are not suspended tickets found that match the selected causes of suspension configured in the app's settings**
 ![](http://i.imgur.com/lduoVug.png)
 
 # Feature Roadmap
@@ -30,15 +20,8 @@ A full-page nav bar app for bulk deleting suspended tickets by specified causes 
 * Ability to toggle the causes of suspension used within the app so configuration does not require updating the app settings
 * 'Refresh' button
 
-* Bulk delete suspended tickets by cause of suspension
-* The causes of suspension are displayed as checkboxes & if checked then suspended tickets with those will be bulk deleted
-* By default all settings are set to **False** but any 'cause' in the settings can be modified to 'true'
-* The app will count all suspended tickets & filter to just those which are ready to be deleted based on the app's settings.
-* The app will display the total number of suspended tickets that meet the selected causes of suspension
-* The user is prompted to confirm the results of suspended tickets matched by entering the value into an input field before allowing the bulk deletion event
-
 Pull requests are welcome.
 
-### Screenshot(s):
+### Demo
 
 ![Animated GIF](http://g.recordit.co/1GGkCPjdpA.gif)
