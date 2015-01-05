@@ -15,7 +15,7 @@ Pull requests are welcome.
 ---
 
 ### User Guide
-**1: Choose any/all causes of suspension in the app settings**
+**1 - Choose any/all causes of suspension in the app settings**
 
 ![](http://i.imgur.com/V5W2VSb.png)
 
