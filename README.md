@@ -1,4 +1,34 @@
+:warning: *Use of this software is subject to important terms and conditions as set forth in the License file* :warning:
+
 # Suspended Ticket Nuke App
+A full-page nav bar app for bulk deleting suspended tickets by specified causes of suspension. Enabled causes are configured in the app's settings. The app settings are used to determine which causes of suspension to include when fetching the suspended tickets intended for bulk deletion.
+
+# User Guide
+
+1. Choose any/all causes of suspension in the app settings
+
+![]()
+
+2. Find all matching suspended tickets
+
+![]()
+
+3. Confirm the number of suspended tickets that will be bulk deleted. If the value entered does not match the bulk deletion will be prevented
+
+![]()
+
+4. The following displays when all matching suspended tickets have been bulk deleted
+
+![]()
+
+5. The following displays when there are not suspended tickets found that match the selected causes of suspension configured in the app's settings
+
+![]()
+
+# Feature Roadmap
+
+* Ability to toggle the causes of suspension used within the app so configuration does not require updating the app settings
+* 'Refresh' button
 
 * Bulk delete suspended tickets by cause of suspension
 * The causes of suspension are displayed as checkboxes & if checked then suspended tickets with those will be bulk deleted
@@ -7,8 +37,8 @@
 * The app will display the total number of suspended tickets that meet the selected causes of suspension
 * The user is prompted to confirm the results of suspended tickets matched by entering the value into an input field before allowing the bulk deletion event
 
-Pull requests are welcome, but you knew that.
+Pull requests are welcome.
 
 ### Screenshot(s):
 
-![](http://g.recordit.co/1GGkCPjdpA.gif)
+![Animated GIF](http://g.recordit.co/1GGkCPjdpA.gif)

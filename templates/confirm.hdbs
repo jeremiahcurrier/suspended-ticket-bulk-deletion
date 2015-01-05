@@ -7,7 +7,7 @@
 <div class="mainWrapper">
   <h1>Step 2 of 3</h1> 
   <p>&nbsp;</p>
-  <h2>Suspended Ticket(s): <span style="color: #2d2926;">{{filteredTickets}}</span></h2>
+  <h2>Matching Suspended Ticket(s) Found = <span style="color: red;">{{filteredTickets}}</span></h2>
   <p>The results found are all suspended tickets in your account if and only if they have a causes matching this app's currently configured selected causes of suspension. <i>As a safety precaution</i>, the button below won't bulk delete the suspended tickets results until a matching value is entered.</p>
   <p>&nbsp;</p>
   <div class="input-group">    
