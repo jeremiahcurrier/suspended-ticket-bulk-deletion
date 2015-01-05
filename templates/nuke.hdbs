@@ -1,2 +1,15 @@
-<p class="nuke">suspended tickets deleted</p>
-<img src="{{assetURL "nuke.gif"}}" />
+<div class="progressBarWrapper">
+  <div class="progress progress-info">
+    <div class="bar" style="width: 100%"></div>
+  </div>
+</div>
+
+<div class="mainWrapper">
+  <div id="image">
+    <img src="{{assetURL "nuke.gif"}}" />
+  </div>
+  <h1 class="heading">Step 3 of 3</h1>
+  <p>&nbsp;</p>
+  <h2 class="nuke">Deleted {{filteredTickets}} Suspended Ticket(s)</h2>
+    <p><i>Have a great day!</i></p>
+</div>

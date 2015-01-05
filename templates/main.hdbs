@@ -1,0 +1,22 @@
+<div class="progressBarWrapper">
+  <div class="progress progress-info">
+    <div class="bar" style="width: 33.34%"></div>
+  </div>
+</div>
+<div class="mainWrapper">
+  <h1>Step 1 of 3</h1>
+    <p>&nbsp;</p>
+    <h2>Overview</h2>
+    <p>Please select causes of suspension in this app's settings. Only suspended tickets with one of the causes that you've selected in this app's settings will be included in what can be bulk deleted. Ensure your selected causes are correct before proceeding.</p>
+    <p>&nbsp;</p>
+    <p>Check current selected causes in the app's settings by going to <strong>Apps > Manage > Suspended Ticket Nuke</strong>. In the next version you will be able to toggle the causes of suspension on this page directly, <i>stay tuned.</i></p>
+    <p>&nbsp;</p>
+    <h2>Get Started</h2>
+    <p>Click the button below to gather all suspended tickets that have a cause matching any selected causes in the app's settings.</p>
+    <p>&nbsp;</p>
+  <div class="getStarted">
+    <button class="btn filter-all" type="button">Find Matching Suspended Tickets</button>
+  </div>
+  <p>&nbsp;</p>
+  <p style="color:red"><i>Note: Once suspended tickets are bulk deleted they are not recoverable.</i></p>
+</div>

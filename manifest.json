@@ -1,81 +1,91 @@
 {
-  "name" : "Suspended Ticket Nuke App",
+  "name" : "Suspended Ticket Nuke",
   "author" : {
     "name" : "Jeremiah Currier",
-    "email" : "jeremiah@zendesk.com",
-    "url" : "https://github.com/jeremiahcurrier"
+    "email" : "support@zendesk.com",
+    "url" : "https://zendesk.com/"
   },
   "defaultLocale" : "en",
   "singleInstall" : true,
   "private" : true,
   "location" : "nav_bar",
-  "version" : "1.4",
+  "version" : "1.5",
   "frameworkVersion" : "1.0",
   "parameters" : [
     {
-      "name" : "\"Automated response email\"",
+      "name" : "Automated response email",
+      "type" : "checkbox",
+      "required" : false,
+      "default": false
+    },
+
+    {
+      "name" : "Automated response email, delivery failed",
+      "type" : "checkbox",
+      "required" : false,
+      "default": false
+    },
+
+    {
+      "name" : "Automated response email, out of office",
+      "type" : "checkbox",
+      "required" : false,
+      "default": false
+    },
+
+    {
+      "name" : "Automatic email processing failed",
       "type" : "checkbox",
       "required" : false
     },
 
     {
-      "name" : "\"Automated response email, delivery failed\"",
+      "name" : "Detected as email loop",
       "type" : "checkbox",
-      "required" : false
+      "required" : false,
+      "default": false
     },
 
     {
-      "name" : "\"Automated response email, out of office\"",
+      "name" : "Detected as spam",
       "type" : "checkbox",
-      "required" : false
+      "required" : false,
+      "default": false
     },
 
     {
-      "name" : "\"Automatic email processing failed\"",
+      "name" : "Detected email as being from a system user",
       "type" : "checkbox",
-      "required" : false
+      "required" : false,
+      "default": false
     },
 
     {
-      "name" : "\"Detected as email loop\"",
+      "name" : "Email for noreply address",
       "type" : "checkbox",
-      "required" : false
+      "required" : false,
+      "default": false
     },
 
     {
-      "name" : "\"Detected as spam\"",
+      "name" : "Email is from a blacklisted sender or domain",
       "type" : "checkbox",
-      "required" : false
+      "required" : false,
+      "default": false
     },
 
     {
-      "name" : "\"Detected email as being from a system user\"",
+      "name" : "Received from Support Address",
       "type" : "checkbox",
-      "required" : false
+      "required" : false,
+      "default": false
     },
 
     {
-      "name" : "\"Email for \"noreply\" address\"",
+      "name" : "Submitted by registered user while logged out",
       "type" : "checkbox",
-      "required" : false
-    },
-
-    {
-      "name" : "\"Email is from a blacklisted sender or domain\"",
-      "type" : "checkbox",
-      "required" : false
-    },
-
-    {
-      "name" : "\"Received from Support Address\"",
-      "type" : "checkbox",
-      "required" : false
-    },
-
-    {
-      "name" : "\"Submitted by registered user while logged out\"",
-      "type" : "checkbox",
-      "required" : false
+      "required" : false,
+      "default": false
     }
   ]
 }

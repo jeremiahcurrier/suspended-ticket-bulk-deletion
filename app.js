@@ -48,46 +48,41 @@
 
     init: function () {
 
-      this.popover({
-        width: 300,
-        height: 300
-      });
-
-      this.switchTo('modal');
+      this.switchTo('main');
 
       this.blacklist_map = []; // build array of substrings containing causes of suspension
       
-      if (this.setting('\"Email is from a blacklisted sender or domain\"') === true) {
+      if (this.setting('Email is from a blacklisted sender or domain') === true) {
         this.blacklist_map.push("Email is from a blacklisted sender or domain");
       }
-      if (this.setting('\"Email for \"noreply\" address\"') === true) {
+      if (this.setting('Email for noreply address') === true) {
         this.blacklist_map.push("Email for \"noreply\" address");
       }
-      if (this.setting('\"Automated response email, out of office\"') === true) {
+      if (this.setting('Automated response email, out of office') === true) {
         this.blacklist_map.push("Automated response email, out of office");
       }
-      if (this.setting('\"Received from Support Address\"') === true) {
+      if (this.setting('Received from Support Address') === true) {
         this.blacklist_map.push("Received from Support Address");
       }
-      if (this.setting('\"Detected as email loop\"') === true) {
+      if (this.setting('Detected as email loop') === true) {
         this.blacklist_map.push("Detected as email loop");
       }
-      if (this.setting('\"Automatic email processing failed\"') === true) {
+      if (this.setting('Automatic email processing failed') === true) {
         this.blacklist_map.push("Automatic email processing failed");
       }
-      if (this.setting('\"Detected as spam\"') === true) {
+      if (this.setting('Detected as spam') === true) {
         this.blacklist_map.push("Detected as spam");
       }
-      if (this.setting('\"Submitted by registered user while logged out\"') === true) {
+      if (this.setting('Submitted by registered user while logged out') === true) {
         this.blacklist_map.push("Submitted by registered user while logged out");
       }
-      if (this.setting('\"Automated response email, delivery failed\"') === true) {
+      if (this.setting('Automated response email, delivery failed') === true) {
         this.blacklist_map.push("Automated response email, delivery failed");
       }
-      if (this.setting('\"Automated response email\"') === true) {
+      if (this.setting('Automated response email') === true) {
         this.blacklist_map.push("Automated response email");
       }
-      if (this.setting('\"Detected email as being from a system user\"') === true) {
+      if (this.setting('Detected email as being from a system user') === true) {
         this.blacklist_map.push("Detected email as being from a system user");
       }
 
@@ -118,7 +113,9 @@
 
         this.ajax('deleteIt', filteredTickets) // Send last batch to 'deleteIt'
           .done( function() {
-              this.switchTo('nuke');
+              this.switchTo('nuke', {
+                filteredTickets : this.filteredTickets.length
+              });
               services.notify('Suspended tickets deleted successfully');
           })
           .fail( function() { 
@@ -140,7 +137,8 @@
       console.log(response);
     },
 
-    filterResults: function(data) { // Get all suspended tickets, filter for IDs w cause matching any app settings cause that's true
+    filterResults: function(data) { 
+    // Get all suspended tickets, filter for IDs w cause matching any app settings cause that's true
 
       var next_page         = data.next_page,
           previous_page     = data.previous_page,
@@ -152,13 +150,15 @@
         this.ajax('fetchTickets', next_page);
         this.suspended_tickets = this.suspended_tickets.concat(data.suspended_tickets);
 
-      } else if ( !previous_page && !next_page ) { // Execute this code block if account has LESS THAN 101 suspended tickets
+      } else if ( !previous_page && !next_page ) { 
+      // Execute this code block if account has LESS THAN 101 suspended tickets
 
-        // console.log('All suspended tickets retrieved - there was 1 page.');
+        console.log('All suspended tickets retrieved - there was 1 page.');
 
         this.suspended_tickets = data.suspended_tickets;
 
-        for (var i = 0; this.suspended_tickets.length > i; i++ ) { // Looping & checking if any settings causes match any suspended ticket causes
+        for (var i = 0; this.suspended_tickets.length > i; i++ ) { 
+        // Looping & checking if any settings causes match any suspended ticket causes
           if (_.contains(this.blacklist_map, this.suspended_tickets[i].cause)) {
             filteredTickets.push(this.suspended_tickets[i].id);
           }
@@ -173,15 +173,18 @@
           this.switchTo('nothingToDelete');
         }
         
-        this.filteredTickets = filteredTickets; // Anchoring 'filteredTickets' too app at the root 'this'
+        this.filteredTickets = filteredTickets; 
+        // Anchoring 'filteredTickets' too app at the root 'this'
 
-      } else { // Execute this code block once FINAL page of paginated results retrieved
+      } else { 
+      // Execute this code block once FINAL page of paginated results retrieved
 
-        // console.log('All suspended tickets retrieved - there were 2+ pages.');
+        console.log('All suspended tickets retrieved - there were 2+ pages.');
 
         this.suspended_tickets = this.suspended_tickets.concat(data.suspended_tickets);
 
-        for (var j = 0; this.suspended_tickets.length > j; j++ ) { // Looping & checking if any settings causes match any suspended ticket causes
+        for (var j = 0; this.suspended_tickets.length > j; j++ ) { 
+        // Looping & checking if any settings causes match any suspended ticket causes
           if (_.contains(this.blacklist_map, this.suspended_tickets[j].cause)) {
             filteredTickets.push(this.suspended_tickets[j].id);
           }
@@ -196,21 +199,26 @@
           this.switchTo('nothingToDelete');
         }
 
-        this.filteredTickets = filteredTickets; // Anchoring 'filteredTickets' too app at the root 'this'
+        this.filteredTickets = filteredTickets; 
+        // Anchoring 'filteredTickets' too app at the root 'this'
 
       }
     
     },
 
-    processInputValue: function() { // Evaluate entered value vs value to delete
+    processInputValue: function() { 
+    // Evaluate entered value vs value to delete
 
-      var filteredTickets     = this.filteredTickets, // All suspended ticket IDs if cause = any app parameter cause that is TRUE
-          filteredTicketsSize = filteredTickets.length, // Number of total suspended tickets with cause matching a true checkbox in app settings
+      var filteredTickets     = this.filteredTickets, 
+          // All suspended ticket IDs if cause = any app parameter cause that is TRUE
+          filteredTicketsSize = filteredTickets.length, 
+          // Number of total suspended tickets with cause matching a true checkbox in app settings
           result              = this.$('input#inputValueId').val();
 
       if (result == filteredTickets.length ) {
         this.$('#inputValueId').val('');
-        this.deleteResults(filteredTickets); // Pass filtered results of all matching IDs to the deleteResults function for handling
+        this.deleteResults(filteredTickets); 
+        // Pass filtered results of all matching IDs to the deleteResults function for handling
       } else {
         this.$('#inputValueId').val('');
         services.notify('Please enter ' + filteredTicketsSize + ' to confirm', 'error');
@@ -221,7 +229,6 @@
 
 }());
 
-//
 // 
 //            * * * Suspended Ticket Nuke App * * *
 // 

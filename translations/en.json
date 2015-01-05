@@ -1,58 +1,54 @@
 {
   "app": {
-
-    "parameters": {
-      "\"Automated response email\"":  { "label": "\"Automated response email\"", "helpText": "General automated response email message from a server." },
-      "\"Automated response email, delivery failed\"": { "label": "\"Automated response email, delivery failed\"", "helpText": "This indicates that an outgoing email notification was not delivered to its recipient. The delivery failure email response is suspended so that a ticket is not created." },
-      "\"Automated response email, out of office\"": { "label": "\"Automated response email, out of office\"", "helpText": "Out of office and vacation auto-generated response emails are suspended." },
-      "\"Automatic email processing failed\"": { "label": "\"Automatic email processing failed\""},
-      "\"Detected as email loop\"": { "label": "\"Detected as email loop\"", "helpText": "If you receive a large number of emails from a single sender in a short period of time, those emails are suspended and the sender's address is blacklisted for one hour. This also happens to tickets that are sent from an address equal to your default Reply To address." },
-      "\"Detected as spam\"": { "label": "\"Detected as spam\"", "helpText": "The email has been flagged as spam with a probability lower than 99%. If the probability is 99%, the email is rejected. The email might also have been flagged as spam because it is from a suspended user." },
-      "\"Detected email as being from a system user\"": { "label": "\"Detected email as being from a system user\"", "helpText": "The email message came from an address associated with your Zendesk, and as such would cause a loop." },
-      "\"Email for \"noreply\" address\"": { "label": "\"Email for \"noreply\" address\"", "helpText": "For example noreply@domain.com" },
-      "\"Email is from a blacklisted sender or domain\"": { "label": "\"Email is from a blacklisted sender or domain\"", "The email came from an address or domain that you've blacklisted." },
-      "\"Received from Support Address\"": { "label": "\"Received from Support Address\"", "helpText": "This email has placed the Requester as a Support Address. A Support Address can't be the Requester on a ticket, sorry." },
-      "\"Submitted by registered user while logged out\"": { "label": "\"Submitted by registered user while logged out\"", "helpText": "If a registered user submits a ticket using the Submit a Request form while they are not logged in, the ticket will be suspended and a verification email will be sent to them. When the user clicks the verification link in the email the ticket will be unsuspended." }
-    },
-    "package": "modal_sample_app",
-    "description":  {
-      "value": "Discover all about modal specific events, and invoking a modal",
+    "package": "app_name",
+    "description": {
+      "value": "Play the famous zen tunes in your help desk.",
       "title": "app description"
     },
-
     "name": {
-      "value": "Modal Sample App",
+      "value": "Buddha Machine",
       "title": "app name"
     }
   },
 
-  // IN THE BODY OF THE APP
-
-  "modal_button": { // this is in the modal.hdbs in the div class of "modal_button_cell"
-    "value": "Delete tickets with selected causes", // TEXT IN THE button IN THE APP UI - not in the modal
-    "title": "Message on the button in the sidebar app interface"
+  "loading": {
+    "value": "Welcome to this Sample App",
+    "title": "loading placeholder"
   },
 
-  // BELOW IS THE ACTUAL MODAL
-
-  "save_button": { // Unused
-    "value": "CONFIRM .save_button",
-    "title": "Message on the save button in modal"
+  "fetch": {
+    "done": {
+      "value": "Good",
+      "title": "fetch success"
+    },
+    "fail": {
+      "value": "failed to fecth information from the server",
+      "title": "fetch failure"
+    }
   },
 
-  "close_button": { // Unused
-    "value": "CANCEL .close_button",
-    "title": "Message on the close button in modal"
+  "id": {
+    "value": "ID",
+    "title": "user id"
   },
 
-  "modal_header": { // Unused
-   "value": "YOU SURE (modal header) - .modal_header", // TEXT IN THE header OF THE MODAL
-   "title": "Header message inside the modal window"
+  "email": {
+    "value": "Email",
+    "title": "user email"
   },
 
-  "modal_body": { // Unused
-    "value": "YOU SURE (modal body) - .modal_body", // TEXT IN THE body OF THE MODAL
-    "title": "Message inside a modal window that plays on the 'Keep Calm! Make a Zendesk App' phase"
+  "name": {
+    "value": "Name",
+    "title": "user name"
+  },
+
+  "role": {
+    "value": "Role",
+    "title": "user role"
+  },
+
+  "groups": {
+    "value": "Groups",
+    "title": "user groups"
   }
-
 }

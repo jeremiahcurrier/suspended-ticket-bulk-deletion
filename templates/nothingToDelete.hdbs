@@ -1,2 +1,12 @@
-<p class="nothingToDelete"> Looks like there's nothing to delete...</p>
-<img src="{{assetURL "homer.gif"}}" />
+<div class="mainWrapper">
+  <div id="image">
+    <img src="{{assetURL "homer.gif"}}" />
+  </div>
+  <h1 class="heading">No Matches Found</h1>
+  <h3 class="unexpected"><i>Unexpected?</i></h3>
+    <p>Make sure you've checked causes of suspension in the app's settings.</p>
+    <p>&nbsp;</p>
+    <p>If you've checked this and there are suspended tickets with any of the selected causes in the app's settings then please send an email to <a href="mailto:support@zendesk.com?Subject=Suspended%20Ticket%20Nuke%20App%20is%20not%20working" target="_top">support@zendesk.com</a>.</p>
+    <p>&nbsp;</p>
+    <p>If you need support then an example ticket & video reproduction goes a long way. Cheers!</p>
+</div>
