@@ -1,9 +1,21 @@
-<div>
-  <div class="confirm">
-    <p>You're about to delete <strong>{{filteredTickets}}</strong> suspended tickets, please confirm below </p>
+<div class="progressBarWrapper">
+  <div class="progress progress-info">
+    <div class="bar" style="width: 66.67%"></div>
   </div>
-  <div class="input-group">
-    <input type="text" class="form-control" id='inputValueId' placeholder="Enter value here"/>
-    <button class="btn submit">Confirm</button>
+</div>
+
+<div class="mainWrapper">
+  <h1>Step 2 of 3</h1> 
+  <p>&nbsp;</p>
+  <h2>Suspended Ticket(s): <span style="color: #2d2926;">{{filteredTickets}}</span></h2>
+  <p>The results found are all suspended tickets in your account if and only if they have a causes matching this app's currently configured selected causes of suspension. <i>As a safety precaution</i>, the button below won't bulk delete the suspended tickets results until a matching value is entered.</p>
+  <p>&nbsp;</p>
+  <div class="input-group">    
+    <input type="text" class="form-control" id='inputValueId' placeholder="Enter {{filteredTickets}} here"/>
+    <button class="btn submit">Bulk Delete</button>
   </div>
-<div>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p style="color:red"><i>BE CAREFUL: ONCE THE SUSPENDED TICKETS ARE BULK DELETED THEY ARE NOT RECOVERABLE.</i></p>
+</div>
